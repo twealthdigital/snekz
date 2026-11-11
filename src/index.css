@@ -183,3 +183,41 @@ body {
     mask-image: linear-gradient(transparent, #000 25%, #000 75%, transparent);
   }
 }
+
+/* big shoe: soft fade + slide when the colour changes */
+@keyframes shoe-in {
+  from {
+    opacity: 0;
+    transform: translateX(28px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.shoe-in {
+  animation: shoe-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shoe-in {
+    animation: none;
+  }
+}
+
+/* 90° button: old angle turns away, new angle turns in */
+@keyframes shoe-turn-out {
+  from { opacity: 1; transform: rotateY(0deg) scale(1); }
+  to { opacity: 0; transform: rotateY(-75deg) scale(0.92); }
+}
+@keyframes shoe-turn-in {
+  from { opacity: 0; transform: rotateY(75deg) scale(0.92); }
+  to { opacity: 1; transform: rotateY(0deg) scale(1); }
+}
+.shoe-turn-out { animation: shoe-turn-out 0.45s ease-in both; }
+.shoe-turn-in { animation: shoe-turn-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .shoe-turn-in, .shoe-turn-out { animation: none; }
+}

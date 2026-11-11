@@ -30,6 +30,12 @@ export const products = [
       '/images/velocity-2.png',
       '/images/velocity-3.png',
     ],
+    // extra angles per colour, in order: front, side, back
+    views: [
+      ['/images/velocity-1-2.png', '/images/velocity-1-3.png', '/images/velocity-1-4.png'],
+      ['/images/velocity-2-2.png', '/images/velocity-2-3.png', '/images/velocity-2-4.png'],
+      ['/images/velocity-3-2.png', '/images/velocity-3-3.png', '/images/velocity-3-4.png'],
+    ],
   },
   {
     id: 'apex-runner',

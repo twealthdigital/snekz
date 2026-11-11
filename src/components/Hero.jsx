@@ -1,19 +1,31 @@
 import { useState, useRef, useEffect } from 'react'
-import { ChevronLeft, ChevronRight, Plus, ArrowRight, Sun, Moon, Play, Check } from 'lucide-react'
+import { ChevronLeft, ChevronRight, ArrowRight, Sun, Moon, Play, Check } from 'lucide-react'
 import ImageSlot from './ImageSlot'
+import ShoeStage from './ShoeStage'
 import HeaderBar, { NotchLogo } from './Header'
 import { products, sizes } from '../data/products'
 
 export default function Hero({ cartCount, onAddToCart }) {
   const [pIndex, setPIndex] = useState(0)
   const [imgIndex, setImgIndex] = useState(0)
-  const [color, setColor] = useState(0)
   const [size, setSize] = useState(null)
   const [sizeError, setSizeError] = useState(false)
   const [added, setAdded] = useState(false)
+  const [spin, setSpin] = useState({ key: '', n: 0 })
   const [dark, setDark] = useState(false)
 
   const product = products[pIndex]
+  const color = Math.min(imgIndex, product.colors.length - 1)
+
+  // extra angles for the colour on screen: front, side, back
+  const views = product.views?.[imgIndex]
+  const viewKey = `${pIndex}-${imgIndex}`
+  const view = spin.key === viewKey ? spin.n : 0
+  const bigSrc = view === 0 || !views ? product.images[imgIndex] : views[view - 1]
+  const rotate = () => {
+    if (!views) return
+    setSpin({ key: viewKey, n: (view + 1) % (views.length + 1) })
+  }
 
   // thumbnails: the one in the middle is always the active one
   const thumbsRef = useRef(null)
@@ -58,7 +70,6 @@ export default function Hero({ cartCount, onAddToCart }) {
   const go = (dir) => {
     setPIndex((i) => (i + dir + products.length) % products.length)
     setImgIndex(0)
-    setColor(0)
     setSize(null)
     setSizeError(false)
   }
@@ -123,12 +134,13 @@ export default function Hero({ cartCount, onAddToCart }) {
             SNEKZ
           </span>
           <div className="absolute left-0 top-0 h-full w-full lg:left-[15%] lg:top-[21%] lg:h-[58%] lg:w-[65%]">
-            <ImageSlot
-              key={product.images[imgIndex]}
-              src={product.images[imgIndex]}
-              alt={product.name}
-              className="h-full w-full drop-shadow-[0_28px_28px_rgba(0,0,0,0.3)]"
-            />
+            <div key={viewKey} className="shoe-in h-full w-full">
+              <ShoeStage
+                src={bigSrc}
+                alt={product.name}
+                className="h-full w-full drop-shadow-[0_28px_28px_rgba(0,0,0,0.3)]"
+              />
+            </div>
           </div>
         </div>
 
@@ -170,20 +182,22 @@ export default function Hero({ cartCount, onAddToCart }) {
           </ul>
 
           <div className="mt-4 flex items-center justify-between">
-            <div className="flex gap-2">
+            <div className="relative flex gap-2">
+              {/* sliding box that moves to the chosen colour */}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute -left-[3px] -top-[3px] h-[34px] w-[34px] border-2 border-[var(--fg)] transition-transform duration-300 ease-out"
+                style={{ transform: `translateX(${color * 36}px)` }}
+              />
               {product.colors.map((c, i) => (
                 <button
                   key={c.name}
-                  onClick={() => setColor(i)}
+                  onClick={() => setImgIndex(i)}
                   aria-label={c.name}
                   title={c.name}
-                  className="grid h-7 w-7 place-items-center border border-[var(--line)]"
+                  className="h-7 w-7 border border-[var(--line)]"
                   style={{ backgroundColor: c.hex }}
-                >
-                  {color === i && (
-                    <Plus size={15} strokeWidth={3} className="text-white mix-blend-difference" />
-                  )}
-                </button>
+                />
               ))}
             </div>
             <span className="text-xl font-bold tracking-tight">{product.price}</span>
@@ -253,10 +267,11 @@ export default function Hero({ cartCount, onAddToCart }) {
           </button>
 
           <button
-            title="360° view"
+            onClick={rotate}
+            title="Rotate view"
             className="grid h-14 w-14 place-items-center rounded-full border-2 border-[var(--fg)] text-[13px] font-black transition hover:border-accent hover:text-accent lg:absolute lg:bottom-[9%] lg:left-1/2 lg:-translate-x-1/2"
           >
-            360°
+            {(view + 1) * 90}°
           </button>
 
           <button className="flex items-center gap-2 text-[13px] font-semibold transition hover:opacity-60 lg:absolute lg:bottom-[7%] lg:right-[10%]">
