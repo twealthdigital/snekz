@@ -15,7 +15,7 @@ export default function App() {
     const onScroll = () => {
       const el = document.getElementById('new-collection')
       if (el) setOverCollection(el.getBoundingClientRect().top <= 40)
-      setScrolled(window.scrollY > 80)
+      setScrolled(window.scrollY > 10)
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
@@ -23,8 +23,7 @@ export default function App() {
 
   return (
     <>
-      <FixedHeader cartCount={cartCount} dark={dark} />
-      <FixedHeader cartCount={cartCount} dark={dark} scrolled={scrolled} drop />
+      <FixedHeader cartCount={cartCount} dark={dark} scrolled={scrolled} />
       <main>
         <Hero dark={dark} />
         <NewCollection

@@ -20,11 +20,10 @@ export function NotchLogo() {
 }
 
 // One header for the whole page: logo notch + nav, fixed at the top
-export function FixedHeader({ cartCount, dark, scrolled, drop }) {
+export function FixedHeader({ cartCount, dark, scrolled }) {
   return (
     <header
-      inert={drop && !scrolled}
-      className={`site-header ${drop ? 'site-header-drop' : 'site-header-top'} ${drop && scrolled ? 'site-header-in' : ''} ${dark ? 'hero-dark' : 'hero-light'}`}
+      className={`site-header ${scrolled ? 'site-header-in' : ''} ${dark ? 'hero-dark' : 'hero-light'}`}
     >
       <div className="site-notch" />
       <NotchLogo />
