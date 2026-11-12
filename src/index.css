@@ -18,11 +18,24 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* register the theme colours so light and dark can fade instead of snapping */
+@property --frame { syntax: "<color>"; inherits: true; initial-value: #000000; }
+@property --frame-fg { syntax: "<color>"; inherits: true; initial-value: #ffffff; }
+@property --fg { syntax: "<color>"; inherits: true; initial-value: #0b0b0b; }
+@property --faint { syntax: "<color>"; inherits: true; initial-value: transparent; }
+@property --line { syntax: "<color>"; inherits: true; initial-value: transparent; }
+@property --ghost { syntax: "<color>"; inherits: true; initial-value: transparent; }
+@property --card { syntax: "<color>"; inherits: true; initial-value: transparent; }
+@property --thumb { syntax: "<color>"; inherits: true; initial-value: transparent; }
+@property --p1 { syntax: "<color>"; inherits: true; initial-value: #ffffff; }
+@property --p2 { syntax: "<color>"; inherits: true; initial-value: #e9e9e7; }
+
 /* LIGHT: black frame, light panel */
 .hero-light {
   --frame: #000000;
   --frame-fg: #ffffff;
-  --panel: radial-gradient(circle at 50% 40%, #ffffff 0%, #e9e9e7 78%);
+  --p1: #ffffff;
+  --p2: #e9e9e7;
   --fg: #0b0b0b;
   --faint: rgb(11 11 11 / 0.3);
   --line: rgb(11 11 11 / 0.2);
@@ -36,11 +49,12 @@ body {
 .hero-dark {
   --frame: #f5f5f3;
   --frame-fg: #0b0b0b;
-  --panel: radial-gradient(circle at 50% 40%, #222222 0%, #050505 78%);
+  --p1: #222222;
+  --p2: #050505;
   --fg: #f5f5f3;
   --faint: rgb(255 255 255 / 0.3);
   --line: rgb(255 255 255 / 0.25);
-  --ghost: rgb(255 255 255 / 0.06);
+  --ghost: rgb(255 255 255 / 0.12);
   --card: rgb(255 255 255 / 0.07);
   --thumb: rgb(255 255 255 / 0.06);
   --logo-filter: none;
@@ -48,17 +62,19 @@ body {
 
 /* the whole hero is the frame (thick, full-bleed) */
 .hero-frame {
-  --pad: 14px;
+  --pad: 7px;
   --pb: 96px; /* extra room for the floating mobile nav */
   position: relative;
   padding: var(--pad);
   padding-bottom: var(--pb);
   background: var(--frame);
-  transition: background 0.3s;
+  transition-property: --frame, --frame-fg, --fg, --faint, --line, --ghost, --card, --thumb, --p1, --p2;
+  transition-duration: 0.7s;
+  transition-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
 }
 @media (min-width: 1024px) {
   .hero-frame {
-    --pad: 14px;
+    --pad: 7px;
     --pb: var(--pad);
     height: 100svh;
     min-height: 720px;
@@ -66,7 +82,7 @@ body {
 }
 
 .panel-bg {
-  background: var(--panel);
+  background: radial-gradient(circle at 50% 40%, var(--p1) 0%, var(--p2) 78%);
   color: var(--fg);
 }
 
@@ -82,9 +98,9 @@ body {
 @media (min-width: 1024px) {
   .frame-clip {
     clip-path: polygon(
-      0 0, 29% 0, 34% 46px, 66% 46px, 71% 0, 100% 0,
+      0 0, 29% 0, 34% 36px, 66% 36px, 71% 0, 100% 0,
       100% 21%, 96% 35%, 96% 65%, 100% 79%,
-      100% 100%, 71% 100%, 66% calc(100% - 46px), 34% calc(100% - 46px), 29% 100%, 0 100%,
+      100% 100%, 71% 100%, 66% calc(100% - 36px), 34% calc(100% - 36px), 29% 100%, 0 100%,
       0 79%, 4% 65%, 4% 35%, 0 21%
     );
   }
@@ -103,6 +119,7 @@ body {
 }
 .notch-logo img {
   filter: var(--logo-filter);
+  transition: filter 0.7s cubic-bezier(0.65, 0, 0.35, 1);
 }
 .notch-btn {
   position: absolute;
@@ -111,6 +128,17 @@ body {
   height: 46px;
   transform: translateX(-50%);
   z-index: 30;
+}
+
+@media (min-width: 1024px) {
+  .notch-logo {
+    top: calc(var(--pad) + 3px);
+    width: 105px;
+    height: 30px;
+  }
+  .notch-btn {
+    height: 36px;
+  }
 }
 
 @keyframes nudge {
@@ -220,4 +248,25 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .shoe-turn-in, .shoe-turn-out { animation: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-frame, .notch-logo img { transition: none; }
+}
+
+/* bold outlined type */
+.outline-text {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--fg);
+  letter-spacing: -0.02em;
+}
+
+/* headline, counter and price slide in when the sneaker changes */
+@keyframes count-in {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.count-in { animation: count-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@media (prefers-reduced-motion: reduce) {
+  .count-in { animation: none; }
 }

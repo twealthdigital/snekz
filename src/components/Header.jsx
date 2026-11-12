@@ -1,7 +1,11 @@
 import { Search, ShoppingBag, User, LayoutGrid } from 'lucide-react'
 import logo from '../assets/logo.png'
 
-const links = ['Shop', 'All Products', 'New Collection']
+const links = [
+  { label: 'Shop', href: '#shop' },
+  { label: 'All Products', href: '#shop' },
+  { label: 'New Collection', href: '#new-collection' },
+]
 
 const iconBtn = 'relative grid h-9 w-9 place-items-center rounded-full transition hover:opacity-60'
 
@@ -25,8 +29,8 @@ export default function HeaderBar({ cartCount }) {
         </button>
         <nav className="hidden items-center gap-4 text-[11px] font-medium uppercase tracking-wide lg:flex xl:gap-7 xl:text-[13px]">
           {links.map((l) => (
-            <a key={l} href="#shop" className="transition hover:opacity-60">
-              {l}
+            <a key={l.label} href={l.href} className="transition hover:opacity-60">
+              {l.label}
             </a>
           ))}
         </nav>
