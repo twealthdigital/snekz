@@ -1,6 +1,6 @@
-import { ArrowRight, ArrowDown, Feather, Layers, Zap } from 'lucide-react'
+import { ArrowRight, Feather, Layers, Zap } from 'lucide-react'
 import ImageSlot from './ImageSlot'
-import HeaderBar, { NotchLogo } from './Header'
+ 
 import { products } from '../data/products'
 
 const perks = [
@@ -9,23 +9,15 @@ const perks = [
   { icon: Zap, label: 'All-day performance' },
 ]
 
-export default function Hero({ cartCount }) {
+export default function Hero() {
   const { price } = products[0]
 
   return (
-    <section id="home" aria-label="Velocity" className="hero-light hero-frame">
-      <NotchLogo />
+    <section id="home" aria-label="Velocity" className="hero-light hero-frame hero-join-bottom">
+ 
 
-      {/* scroll cue lives in the bottom notch, same spot as add to cart below */}
-      <a
-        href="#new-collection"
-        className="notch-btn flex w-[40%] items-center justify-center gap-2 text-xs font-extrabold uppercase tracking-[0.2em] text-[var(--frame-fg)] transition hover:text-accent lg:w-[30%] lg:text-sm"
-      >
-        Scroll <ArrowDown size={16} strokeWidth={3} className="animate-bounce" />
-      </a>
-
-      <div className="frame-clip panel-bg relative min-h-[calc(100svh-7rem)] overflow-hidden rounded-[22px] pb-16 lg:h-full lg:min-h-0 lg:pb-0">
-        <HeaderBar cartCount={cartCount} />
+      <div className="frame-clip-top panel-bg relative min-h-[calc(100svh-7px)] overflow-hidden rounded-t-[22px] pb-16 pt-14 lg:h-full lg:min-h-0 lg:pb-0 lg:pt-0">
+ 
 
         {/* stage: ghost word, slash, speed lines, shoe */}
         <div className="relative mx-auto mt-1 aspect-[4/3] w-full max-w-[520px] lg:pointer-events-none lg:absolute lg:inset-0 lg:mt-0 lg:aspect-auto lg:max-w-none">

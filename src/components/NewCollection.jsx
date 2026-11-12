@@ -2,15 +2,15 @@ import { useState, useRef, useEffect } from 'react'
 import { ChevronLeft, ChevronRight, Sun, Moon, Check } from 'lucide-react'
 import ImageSlot from './ImageSlot'
 import ShoeStage from './ShoeStage'
-import HeaderBar, { NotchLogo } from './Header'
+ 
 import { products } from '../data/products'
 
-export default function NewCollection({ cartCount, onAddToCart }) {
+export default function NewCollection({ onAddToCart, dark, setDark }) {
   const [pIndex, setPIndex] = useState(0)
   const [imgIndex, setImgIndex] = useState(0)
   const [added, setAdded] = useState(false)
   const [spin, setSpin] = useState({ key: '', n: 0 })
-  const [dark, setDark] = useState(false)
+ 
 
   const product = products[pIndex]
   const [first, ...rest] = product.name.split(' ')
@@ -83,8 +83,8 @@ export default function NewCollection({ cartCount, onAddToCart }) {
     'absolute z-30 grid h-10 w-10 place-items-center rounded-full bg-[var(--frame)] text-[var(--frame-fg)] transition hover:text-accent top-[17%] lg:top-1/2 lg:-translate-y-1/2 arrow-tab'
 
   return (
-    <section id="new-collection" aria-label="New collection" className={`${dark ? 'hero-dark' : 'hero-light'} hero-frame`}>
-      <NotchLogo />
+    <section id="new-collection" aria-label="New collection" className={`${dark ? 'hero-dark' : 'hero-light'} hero-frame hero-join-top`}>
+ 
 
       {/* arrows live on the wide side panels */}
       <button
@@ -117,8 +117,8 @@ export default function NewCollection({ cartCount, onAddToCart }) {
       </button>
 
       {/* light / dark panel */}
-      <div className="frame-clip panel-bg relative min-h-[calc(100svh-7rem)] overflow-hidden rounded-[22px] pb-16 lg:h-full lg:min-h-0 lg:pb-0">
-        <HeaderBar cartCount={cartCount} />
+      <div className="frame-clip-bottom panel-bg relative min-h-[calc(100svh-7rem)] overflow-hidden rounded-b-[22px] pb-16 pt-14 lg:h-full lg:min-h-0 lg:pb-0 lg:pt-0">
+ 
 
         {/* ghost wordmark + shoe */}
         <div className="relative mx-auto mt-1 aspect-[4/3] w-full max-w-[520px] lg:pointer-events-none lg:absolute lg:inset-0 lg:mt-0 lg:aspect-auto lg:max-w-none">

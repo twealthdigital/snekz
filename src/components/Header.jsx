@@ -19,6 +19,19 @@ export function NotchLogo() {
   )
 }
 
+// One header for the whole page: logo notch + nav, fixed at the top
+export function FixedHeader({ cartCount, dark }) {
+  return (
+    <header className={`site-header ${dark ? 'hero-dark' : 'hero-light'}`}>
+      <div className="site-notch" />
+      <NotchLogo />
+      <div className="relative mx-[7px] mt-[7px]">
+        <HeaderBar cartCount={cartCount} />
+      </div>
+    </header>
+  )
+}
+
 // Nav links left, icons right (inside the light area)
 export default function HeaderBar({ cartCount }) {
   return (
