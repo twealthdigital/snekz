@@ -195,7 +195,59 @@ body {
   .site-header { transition: none; }
 }
 
-/* logo in the top notch, add-to-cart in the bottom notch */
+/* header 1 scrolls away with the page; header 2 drops in after you scroll past it */
+.site-header-top {
+  position: absolute;
+}
+.site-header-drop {
+  transform: translateY(-140px);
+  visibility: hidden;
+  transition-property: transform, visibility, --frame, --frame-fg, --fg;
+  transition-duration: 0.45s, 0s, 0.7s, 0.7s, 0.7s;
+  transition-delay: 0s, 0.45s, 0s, 0s, 0s;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+.site-header-drop.site-header-in {
+  transform: translateY(0);
+  visibility: visible;
+  transition-delay: 0s, 0s, 0s, 0s, 0s;
+}
+
+/* dropped header: full width, 56px tall, notch touches top and bottom */
+.site-header-drop {
+  --pad: 0px;
+}
+.site-header-drop::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: color-mix(in srgb, var(--p1) 92%, transparent);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.14);
+}
+.site-header-drop > div:last-child {
+  margin: 0;
+}
+.site-header-drop .site-notch {
+  height: 56px;
+  clip-path: polygon(26% 0, 74% 0, 80% 100%, 20% 100%);
+}
+.site-header-drop .notch-logo {
+  top: 9px;
+}
+@media (min-width: 1024px) {
+  .site-header-drop .site-notch {
+    clip-path: polygon(34% 0, 66% 0, 71% 100%, 29% 100%);
+  }
+  .site-header-drop .notch-logo {
+    top: 13px;
+  }
+}
+
+ 
 .notch-logo {
   position: absolute;
   left: 50%;

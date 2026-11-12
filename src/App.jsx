@@ -8,12 +8,14 @@ export default function App() {
   const [cartCount, setCartCount] = useState(0)
   const [dark, setDark] = useState(false)
   const [overCollection, setOverCollection] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
 
   // the fixed header takes the collection's light/dark look once it is scrolled over it
   useEffect(() => {
     const onScroll = () => {
       const el = document.getElementById('new-collection')
       if (el) setOverCollection(el.getBoundingClientRect().top <= 40)
+      setScrolled(window.scrollY > 80)
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
@@ -21,9 +23,10 @@ export default function App() {
 
   return (
     <>
-      <FixedHeader cartCount={cartCount} dark={dark && overCollection} />
+      <FixedHeader cartCount={cartCount} dark={dark} />
+      <FixedHeader cartCount={cartCount} dark={dark} scrolled={scrolled} drop />
       <main>
-        <Hero />
+        <Hero dark={dark} />
         <NewCollection
           onAddToCart={() => setCartCount((c) => c + 1)}
           dark={dark}

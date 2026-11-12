@@ -9,11 +9,11 @@ const perks = [
   { icon: Zap, label: 'All-day performance' },
 ]
 
-export default function Hero() {
+export default function Hero({ dark }) {
   const { price } = products[0]
 
   return (
-    <section id="home" aria-label="Velocity" className="hero-light hero-frame hero-join-bottom">
+    <section id="home" aria-label="Velocity" className={`${dark ? 'hero-dark' : 'hero-light'} hero-frame hero-join-bottom`}>
  
 
       <div className="frame-clip-top panel-bg relative min-h-[calc(100svh-7px)] overflow-hidden rounded-t-[22px] pb-16 pt-14 lg:h-full lg:min-h-0 lg:pb-0 lg:pt-0">
