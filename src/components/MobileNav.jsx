@@ -2,7 +2,7 @@ import { mobileLinks } from '../data/nav'
 
 export default function MobileNav({ section, dark, authOpen, onAccount }) {
   // follows the section on screen: home, shop, collections, for you
-  const active = { home: 'home', shop: 'shop', 'new-collection': 'collections', 'for-you': 'for-you', join: 'account' }[section]
+  const active = { home: 'home', shop: 'shop', 'new-collection': 'collections', 'for-you': 'for-you', join: 'contact' }[section]
 
   return (
     <nav
@@ -28,7 +28,7 @@ export default function MobileNav({ section, dark, authOpen, onAccount }) {
                   : { href })}
                 aria-label={label}
                 aria-current={isActive ? 'page' : undefined}
-                className={`group relative flex h-12 items-center rounded-full px-2.5 transition-all min-[400px]:px-3 duration-300 ${
+                className={`group relative flex h-12 items-center rounded-full px-1.5 transition-all duration-300 min-[340px]:px-2 min-[380px]:px-2.5 min-[400px]:px-3 ${
                   isActive
                     ? dark
                       ? 'bg-ink text-white'

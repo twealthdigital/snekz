@@ -8,7 +8,23 @@ const links = [
   { label: 'Shop', href: '#shop' },
   { label: 'New Collection', href: '#new-collection' },
   { label: 'For You', href: '#for-you' },
+  { label: 'Contact', href: '#join', right: true }, // sits beside the icons, there is no room for it left of the logo
 ]
+
+// header text link; the one for the section on screen turns orange and bolder
+function NavLink({ l, section, className = '' }) {
+  const on = l.href === `#${section}`
+  return (
+    <a
+      href={l.href}
+      data-text={l.label}
+      aria-current={on ? 'true' : undefined}
+      className={`nav-link transition hover:opacity-60 ${on ? 'nav-link-on' : ''} ${className}`}
+    >
+      {l.label}
+    </a>
+  )
+}
 
 const iconBtn = 'relative grid h-9 w-9 place-items-center rounded-full transition hover:opacity-60'
 
@@ -126,24 +142,23 @@ export default function HeaderBar({ authOpen, section, cartCount, onSearch, onCa
           <Search size={19} />
         </button>
         <nav className="hidden items-center gap-4 text-[11px] font-medium uppercase tracking-wide lg:flex xl:gap-7 xl:text-[13px]">
-          {links.map((l) => {
-            const on = l.href === `#${section}`
-            return (
-              <a
-                key={l.label}
-                href={l.href}
-                data-text={l.label}
-                aria-current={on ? 'true' : undefined}
-                className={`nav-link transition hover:opacity-60 ${on ? 'nav-link-on' : ''}`}
-              >
-                {l.label}
-              </a>
-            )
-          })}
+          {links.filter((l) => !l.right).map((l) => (
+            <NavLink key={l.label} l={l} section={section} />
+          ))}
         </nav>
       </div>
 
       <div className="flex items-center gap-1">
+        {links
+          .filter((l) => l.right)
+          .map((l) => (
+            <NavLink
+              key={l.label}
+              l={l}
+              section={section}
+              className="mr-3 hidden text-[11px] font-medium uppercase tracking-wide lg:inline-grid xl:mr-5 xl:text-[13px]"
+            />
+          ))}
         <button
           className={`${iconBtn} hidden lg:grid`}
           aria-label="Search"

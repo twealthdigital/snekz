@@ -1,4 +1,4 @@
-import { Home, Footprints, LayoutGrid, Heart, User } from 'lucide-react'
+import { Home, Footprints, LayoutGrid, Heart, Mail, User } from 'lucide-react'
 
 // Mobile bottom nav (icon first, label reveals on hover/click)
 export const mobileLinks = [
@@ -6,6 +6,7 @@ export const mobileLinks = [
   { id: 'shop', label: 'Shop', href: '#shop', icon: Footprints },
   { id: 'collections', label: 'Collections', href: '#new-collection', icon: LayoutGrid },
   { id: 'for-you', label: 'For You', href: '#for-you', icon: Heart },
+  { id: 'contact', label: 'Contact', href: '#join', icon: Mail },
   { id: 'account', label: 'Account', href: '#account', icon: User },
 ]
 
