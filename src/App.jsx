@@ -10,6 +10,9 @@ import Cta from './components/Cta'
 import { FixedHeader } from './components/Header'
 import ThemeToggle from './components/ThemeToggle'
 
+// the bottom tab bar replaces the header links on anything narrower than 1024px
+const tabBarShown = () => window.matchMedia('(max-width: 1023.98px)').matches
+
 export default function App() {
   const [cart, setCart] = useState([]) // [{ id, color, qty }]
   const [cartOpen, setCartOpen] = useState(false)
@@ -41,7 +44,7 @@ export default function App() {
   const openAuth = (el, tab = 'signin') => {
     authEl.current = el
     clearTimeout(authTimer.current)
-    setAuth({ ...measure(), open: true, mode: window.innerWidth < 768 ? 'mobile' : 'desktop', tab })
+    setAuth({ ...measure(), open: true, mode: tabBarShown() ? 'mobile' : 'desktop', tab })
     // the tab bar re-flows once Account turns active: aim at the icon's settled spot
     authTimer.current = setTimeout(() => setAuth((a) => (a.open ? { ...a, ...measure() } : a)), 380)
   }
@@ -53,7 +56,7 @@ export default function App() {
   // buttons elsewhere on the page open it from the account icon, so it always grows from there
   const openAccount = (tab) => {
     const el = document.querySelector(
-      window.innerWidth < 768 ? 'nav[aria-label="Mobile"] button[aria-label="Account"]' : '.site-header button[aria-label="Account"]',
+      tabBarShown() ? 'nav[aria-label="Mobile"] button[aria-label="Account"]' : '.site-header button[aria-label="Account"]',
     )
     if (el) openAuth(el, tab)
   }

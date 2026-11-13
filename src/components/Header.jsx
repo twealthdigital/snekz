@@ -156,7 +156,7 @@ export default function HeaderBar({ authOpen, section, cartCount, onSearch, onCa
               key={l.label}
               l={l}
               section={section}
-              className="mr-3 hidden text-[11px] font-medium uppercase tracking-wide lg:inline-grid xl:mr-5 xl:text-[13px]"
+              className="nav-link-right mr-3 text-[11px] font-medium uppercase tracking-wide xl:mr-5 xl:text-[13px]"
             />
           ))}
         <button
@@ -175,7 +175,7 @@ export default function HeaderBar({ authOpen, section, cartCount, onSearch, onCa
           )}
         </button>
         <button
-          className={`${iconBtn} hidden md:grid ${authOpen ? 'text-accent' : ''}`}
+          className={`${iconBtn} hidden lg:grid ${authOpen ? 'text-accent' : ''}`}
           aria-label="Account"
           aria-expanded={!!authOpen}
           aria-haspopup="dialog"

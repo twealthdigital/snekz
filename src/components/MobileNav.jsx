@@ -7,7 +7,7 @@ export default function MobileNav({ section, dark, authOpen, onAccount }) {
   return (
     <nav
       aria-label="Mobile"
-      className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 md:hidden"
+      className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 lg:hidden"
     >
       <ul
         className={`flex items-center gap-0.5 rounded-full p-1 backdrop-blur-xl transition-colors duration-500 ${

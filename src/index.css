@@ -967,8 +967,8 @@ body {
 }
 .auth-layer[data-mode="mobile"] {
   --gap: 16px;
-  --w: calc(100vw - 2 * var(--gap));
-  --left: var(--gap); /* centred on phones */
+  --w: min(440px, calc(100vw - 2 * var(--gap)));
+  --left: calc((100vw - var(--w)) / 2); /* centred above the tab bar */
   --max: calc(100dvh - var(--rise) - 28px);
 }
 .auth-dim {
@@ -1206,6 +1206,11 @@ body {
   font-weight: 800;
 }
 .nav-link-on:hover { opacity: 1; }
+/* header Contact lives beside the icons and only exists where the tab bar is hidden */
+.nav-link-right { display: none; }
+@media (min-width: 1024px) {
+  .nav-link-right { display: inline-grid; }
+}
 
 
 /* phones: bigger hero headline that scales with the screen. The shoe stage is pulled up by the
