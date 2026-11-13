@@ -5,6 +5,7 @@ import NewCollection from './components/NewCollection'
 import ForYou from './components/ForYou'
 import MobileNav from './components/MobileNav'
 import CartPanel from './components/CartPanel'
+import AuthDrop from './components/AuthDrop'
 import { FixedHeader } from './components/Header'
 import ThemeToggle from './components/ThemeToggle'
 
@@ -27,6 +28,20 @@ export default function App() {
   const removeItem = (id, color) => setCart((c) => c.filter((i) => !(i.id === id && i.color === color)))
   const clearCart = () => setCart([])
   const [dark, setDark] = useState(false)
+  const [auth, setAuth] = useState({ open: false, x: 0, y: 28, ib: 44, mode: 'desktop' })
+  // phones pop the box up from the tab bar, bigger screens drop it from the header
+  const openAuth = (el) => {
+    const r = el.getBoundingClientRect()
+    const mode = window.innerWidth < 768 ? 'mobile' : 'desktop'
+    setAuth({
+      open: true,
+      x: r.left + r.width / 2,
+      y: r.top + r.height / 2,
+      ib: document.documentElement.clientHeight - (r.top + r.height / 2),
+      mode,
+    })
+  }
+  const closeAuth = () => setAuth((a) => ({ ...a, open: false }))
   const [overCollection, setOverCollection] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -49,7 +64,7 @@ export default function App() {
 
   return (
     <>
-      <FixedHeader cartCount={cartCount} dark={dark} scrolled={scrolled} onCart={() => setCartOpen(true)} />
+      <FixedHeader cartCount={cartCount} dark={dark} scrolled={scrolled} onCart={() => setCartOpen(true)} onAccount={openAuth} />
       <div className={`frame-sides ${dark ? 'hero-dark' : 'hero-light'}`} aria-hidden>
         <i className="frame-side frame-side-l" />
         <i className="frame-side frame-side-r" />
@@ -65,7 +80,8 @@ export default function App() {
         />
         <ForYou dark={dark} />
       </main>
-      <MobileNav dark={dark} />
+      <MobileNav dark={dark} authOpen={auth.open} onAccount={openAuth} />
+      <AuthDrop {...auth} dark={dark} onClose={closeAuth} />
       <CartPanel
         open={cartOpen}
         dark={dark}

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { mobileLinks } from '../data/nav'
 
-export default function MobileNav({ dark }) {
+export default function MobileNav({ dark, authOpen, onAccount }) {
   const [active, setActive] = useState('home')
 
   return (
@@ -17,12 +17,15 @@ export default function MobileNav({ dark }) {
         }`}
       >
         {mobileLinks.map(({ id, label, href, icon: Icon }) => {
+          const isAccount = id === 'account'
+          const Tag = isAccount ? 'button' : 'a'
           const isActive = active === id
           return (
             <li key={id}>
-              <a
-                href={href}
-                onClick={() => setActive(id)}
+              <Tag
+                {...(isAccount
+                  ? { type: 'button', 'aria-haspopup': 'dialog', 'aria-expanded': !!authOpen, onClick: (e) => onAccount?.(e.currentTarget) }
+                  : { href, onClick: () => setActive(id) })}
                 aria-label={label}
                 aria-current={isActive ? 'page' : undefined}
                 className={`group relative flex h-12 items-center rounded-full px-2.5 transition-all min-[400px]:px-3 duration-300 ${
@@ -48,7 +51,7 @@ export default function MobileNav({ dark }) {
                   {label}
                 </span>
 
-              </a>
+              </Tag>
             </li>
           )
         })}
