@@ -2,7 +2,7 @@ import { mobileLinks } from '../data/nav'
 
 export default function MobileNav({ section, dark, authOpen, onAccount }) {
   // follows the section on screen: home, shop, collections, for you
-  const active = { home: 'home', shop: 'shop', 'new-collection': 'collections', 'for-you': 'for-you' }[section]
+  const active = { home: 'home', shop: 'shop', 'new-collection': 'collections', 'for-you': 'for-you', join: 'account' }[section]
 
   return (
     <nav
@@ -19,7 +19,7 @@ export default function MobileNav({ section, dark, authOpen, onAccount }) {
         {mobileLinks.map(({ id, label, href, icon: Icon }) => {
           const isAccount = id === 'account'
           const Tag = isAccount ? 'button' : 'a'
-          const isActive = active === id
+          const isActive = authOpen ? isAccount : active === id
           return (
             <li key={id}>
               <Tag

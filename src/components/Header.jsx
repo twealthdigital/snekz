@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Search, ShoppingBag, User, LayoutGrid, X } from 'lucide-react'
+import { Search, ShoppingBag, User, X } from 'lucide-react'
 import logoDark from '../assets/logo-dark.png'
 import logoWhite from '../assets/logo-white.png'
 
@@ -88,7 +88,7 @@ function SearchDrop({ open, x, y, dark, onClose }) {
 }
 
 // One header for the whole page: logo notch + nav, fixed at the top
-export function FixedHeader({ section, cartCount, dark, scrolled, onCart, onAccount }) {
+export function FixedHeader({ authOpen, section, cartCount, dark, scrolled, onCart, onAccount }) {
   const [search, setSearch] = useState({ open: false, x: 0, y: 28 })
 
   const openSearch = (el) => {
@@ -105,7 +105,7 @@ export function FixedHeader({ section, cartCount, dark, scrolled, onCart, onAcco
         <div className="site-notch" />
         <NotchLogo />
         <div className="relative mx-[7px] mt-[7px]">
-          <HeaderBar section={section} cartCount={cartCount} onSearch={openSearch} onCart={onCart} onAccount={onAccount} />
+          <HeaderBar authOpen={authOpen} section={section} cartCount={cartCount} onSearch={openSearch} onCart={onCart} onAccount={onAccount} />
         </div>
       </header>
       <SearchDrop open={search.open} x={search.x} y={search.y} dark={dark} onClose={closeSearch} />
@@ -114,7 +114,7 @@ export function FixedHeader({ section, cartCount, dark, scrolled, onCart, onAcco
 }
 
 // Nav links left, icons right (inside the light area)
-export default function HeaderBar({ section, cartCount, onSearch, onCart, onAccount }) {
+export default function HeaderBar({ authOpen, section, cartCount, onSearch, onCart, onAccount }) {
   return (
     <div className="relative z-20 flex h-14 items-center justify-between px-4 lg:absolute lg:inset-x-0 lg:top-0 lg:px-[3.5%]">
       <div className="flex items-center">
@@ -160,15 +160,13 @@ export default function HeaderBar({ section, cartCount, onSearch, onCart, onAcco
           )}
         </button>
         <button
-          className={`${iconBtn} hidden md:grid`}
+          className={`${iconBtn} hidden md:grid ${authOpen ? 'text-accent' : ''}`}
           aria-label="Account"
+          aria-expanded={!!authOpen}
           aria-haspopup="dialog"
           onClick={(e) => onAccount?.(e.currentTarget)}
         >
           <User size={19} />
-        </button>
-        <button className={`${iconBtn} hidden lg:grid`} aria-label="Menu">
-          <LayoutGrid size={19} />
         </button>
       </div>
     </div>

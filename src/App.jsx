@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Hero from './components/Hero'
 import Shop from './components/Shop'
 import NewCollection from './components/NewCollection'
@@ -6,6 +6,7 @@ import ForYou from './components/ForYou'
 import MobileNav from './components/MobileNav'
 import CartPanel from './components/CartPanel'
 import AuthDrop from './components/AuthDrop'
+import Cta from './components/Cta'
 import { FixedHeader } from './components/Header'
 import ThemeToggle from './components/ThemeToggle'
 
@@ -28,20 +29,34 @@ export default function App() {
   const removeItem = (id, color) => setCart((c) => c.filter((i) => !(i.id === id && i.color === color)))
   const clearCart = () => setCart([])
   const [dark, setDark] = useState(false)
-  const [auth, setAuth] = useState({ open: false, x: 0, y: 28, ib: 44, mode: 'desktop' })
-  // phones pop the box up from the tab bar, bigger screens drop it from the header
-  const openAuth = (el) => {
-    const r = el.getBoundingClientRect()
-    const mode = window.innerWidth < 768 ? 'mobile' : 'desktop'
-    setAuth({
-      open: true,
-      x: r.left + r.width / 2,
-      y: r.top + r.height / 2,
-      ib: document.documentElement.clientHeight - (r.top + r.height / 2),
-      mode,
-    })
+  const [auth, setAuth] = useState({ open: false, x: 0, y: 28, ib: 44, mode: 'desktop', tab: 'signin' })
+  const authEl = useRef(null) // the account icon the box grows from / shrinks back into
+  const authTimer = useRef(0)
+  const measure = () => {
+    const r = authEl.current?.getBoundingClientRect()
+    if (!r) return null
+    return { x: r.left + r.width / 2, y: r.top + r.height / 2, ib: document.documentElement.clientHeight - (r.top + r.height / 2) }
   }
-  const closeAuth = () => setAuth((a) => ({ ...a, open: false }))
+  // phones pop the box up from the tab bar, bigger screens drop it from the header
+  const openAuth = (el, tab = 'signin') => {
+    authEl.current = el
+    clearTimeout(authTimer.current)
+    setAuth({ ...measure(), open: true, mode: window.innerWidth < 768 ? 'mobile' : 'desktop', tab })
+    // the tab bar re-flows once Account turns active: aim at the icon's settled spot
+    authTimer.current = setTimeout(() => setAuth((a) => (a.open ? { ...a, ...measure() } : a)), 380)
+  }
+  const closeAuth = () => {
+    setAuth((a) => ({ ...a, open: false }))
+    clearTimeout(authTimer.current)
+    authTimer.current = setTimeout(() => setAuth((a) => (a.open ? a : { ...a, ...measure() })), 330)
+  }
+  // buttons elsewhere on the page open it from the account icon, so it always grows from there
+  const openAccount = (tab) => {
+    const el = document.querySelector(
+      window.innerWidth < 768 ? 'nav[aria-label="Mobile"] button[aria-label="Account"]' : '.site-header button[aria-label="Account"]',
+    )
+    if (el) openAuth(el, tab)
+  }
   const [overCollection, setOverCollection] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [section, setSection] = useState('home') // the section currently on screen
@@ -60,7 +75,7 @@ export default function App() {
       setScrolled(window.scrollY > (window.innerWidth < 768 ? 64 : 10))
 
       // active section: the last one whose top has passed 40% of the screen (last one at the page bottom)
-      const ids = ['home', 'shop', 'new-collection', 'for-you']
+      const ids = ['home', 'shop', 'new-collection', 'for-you', 'join']
       const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4
       let current = ids[0]
       for (const id of ids) {
@@ -80,7 +95,7 @@ export default function App() {
 
   return (
     <>
-      <FixedHeader section={section} cartCount={cartCount} dark={dark} scrolled={scrolled} onCart={() => setCartOpen(true)} onAccount={openAuth} />
+      <FixedHeader authOpen={auth.open} section={section} cartCount={cartCount} dark={dark} scrolled={scrolled} onCart={() => setCartOpen(true)} onAccount={openAuth} />
       <div className={`frame-sides ${dark ? 'hero-dark' : 'hero-light'}`} aria-hidden>
         <i className="frame-side frame-side-l" />
         <i className="frame-side frame-side-r" />
@@ -95,9 +110,10 @@ export default function App() {
           arrowsOn={overCollection}
         />
         <ForYou dark={dark} />
+        <Cta dark={dark} onJoin={() => openAccount('signup')} onSignIn={() => openAccount('signin')} />
       </main>
       <MobileNav section={section} dark={dark} authOpen={auth.open} onAccount={openAuth} />
-      <AuthDrop {...auth} dark={dark} onClose={closeAuth} />
+      <AuthDrop {...auth} dark={dark} onTab={(tab) => setAuth((a) => ({ ...a, tab }))} onClose={closeAuth} />
       <CartPanel
         open={cartOpen}
         dark={dark}

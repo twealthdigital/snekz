@@ -6,9 +6,8 @@ import { ArrowRight, Eye, EyeOff, X } from 'lucide-react'
 // Phones: a circle pops up from the user icon in the tab bar, then widens into the box.
 // Closing runs it backwards: the box shrinks to a circle, which drops back into the icon.
 // It takes the opposite colour of the page (black on white, white on black), like the search bar.
-export default function AuthDrop({ open, x, y, ib, mode, dark, onClose }) {
+export default function AuthDrop({ open, x, y, ib, mode, tab, dark, onTab, onClose }) {
   const [phase, setPhase] = useState(-1) // -1 gone, 0 at the icon, 1 circle out, 2 full box
-  const [tab, setTab] = useState('signin')
   const [showPw, setShowPw] = useState(false)
   const [bh, setBh] = useState(420) // natural height of the form, so the box fits it
   const innerRef = useRef(null)
@@ -94,7 +93,7 @@ export default function AuthDrop({ open, x, y, ib, mode, dark, onClose }) {
                   role="tab"
                   aria-selected={tab === id}
                   data-on={tab === id}
-                  onClick={() => setTab(id)}
+                  onClick={() => onTab(id)}
                 >
                   {label}
                 </button>
@@ -180,14 +179,14 @@ export default function AuthDrop({ open, x, y, ib, mode, dark, onClose }) {
               {signup ? (
                 <>
                   Have an account?{' '}
-                  <button type="button" className="auth-link" onClick={() => setTab('signin')}>
+                  <button type="button" className="auth-link" onClick={() => onTab('signin')}>
                     Sign in
                   </button>
                 </>
               ) : (
                 <>
                   New to SNEKZ?{' '}
-                  <button type="button" className="auth-link" onClick={() => setTab('signup')}>
+                  <button type="button" className="auth-link" onClick={() => onTab('signup')}>
                     Create an account
                   </button>
                 </>

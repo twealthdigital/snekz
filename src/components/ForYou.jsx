@@ -67,9 +67,9 @@ export default function ForYou({ dark }) {
       id="for-you"
       ref={section}
       aria-label="Designs you may like"
-      className={`${dark ? 'hero-dark' : 'hero-light'} hero-frame hero-join-top shop-section`}
+      className={`${dark ? 'hero-dark' : 'hero-light'} hero-frame hero-join-top hero-join-bottom shop-section`}
     >
-      <div className="shop-panel panel-bg relative overflow-hidden pb-28 pt-20 lg:rounded-b-[22px] lg:pb-24 lg:pt-28">
+      <div className="shop-panel panel-bg relative overflow-hidden pb-10 pt-20 lg:pb-12 lg:pt-28">
         {/* ghost word */}
         <span
           aria-hidden

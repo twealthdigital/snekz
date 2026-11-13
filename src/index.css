@@ -909,9 +909,10 @@ body {
 
 
 /* ---- For You: sliding carousel ---- */
-#for-you.hero-frame { padding-bottom: var(--pad); }
+/* the CTA is the last section: it closes the page with the frame strip (none on phones, the nav floats there) */
+#join.hero-frame { padding-bottom: var(--pad); }
 @media (max-width: 767.98px) {
-  #for-you.hero-frame { padding-bottom: 0; }
+  #join.hero-frame { padding-bottom: 0; }
 }
 .fy-stage {
   perspective: 1400px;
