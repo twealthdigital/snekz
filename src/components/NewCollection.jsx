@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { ChevronLeft, ChevronRight, Check } from 'lucide-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import ImageSlot from './ImageSlot'
 import ShoeStage from './ShoeStage'
  
@@ -100,26 +100,6 @@ export default function NewCollection({ onAddToCart, dark, arrowsOn }) {
         className={`${arrowBase} right-3 arrow-tab-right`}
       >
         <ChevronRight size={20} />
-      </button>
-
-      {/* ADD TO CART sits in the bottom notch */}
-      <button
-        onClick={handleAdd}
-        className="notch-btn group relative flex w-[40%] items-center justify-center overflow-hidden text-xs font-extrabold uppercase tracking-[0.2em] text-[var(--frame-fg)] transition-colors duration-300 hover:text-white lg:w-[30%] lg:text-sm"
-      >
-        <span
-          aria-hidden
-          className="absolute inset-y-0 -inset-x-4 -translate-x-[110%] -skew-x-12 bg-accent transition-transform duration-300 ease-out group-hover:translate-x-0"
-        />
-        <span className="relative flex items-center gap-2">
-          {added ? (
-            <>
-              <Check size={16} strokeWidth={3} /> Added
-            </>
-          ) : (
-            'Add to cart'
-          )}
-        </span>
       </button>
 
       {/* light / dark panel */}

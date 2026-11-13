@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { mobileLinks } from '../data/nav'
 
-export default function MobileNav({ cartCount, onCart }) {
+export default function MobileNav({ cartCount, onCart, dark }) {
   const [active, setActive] = useState('home')
 
   return (
@@ -9,7 +9,13 @@ export default function MobileNav({ cartCount, onCart }) {
       aria-label="Mobile"
       className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 md:hidden"
     >
-      <ul className="flex items-center gap-0.5 rounded-full bg-ink/95 p-1 shadow-[0_12px_40px_rgba(0,0,0,0.35)] backdrop-blur-xl">
+      <ul
+        className={`flex items-center gap-0.5 rounded-full p-1 backdrop-blur-xl transition-colors duration-500 ${
+          dark
+            ? 'bg-white/95 shadow-[0_12px_40px_rgba(0,0,0,0.6)] ring-1 ring-black/10'
+            : 'bg-ink/95 shadow-[0_12px_40px_rgba(0,0,0,0.35)]'
+        }`}
+      >
         {mobileLinks.map(({ id, label, href, icon: Icon }) => {
           const isActive = active === id
           return (
@@ -28,8 +34,12 @@ export default function MobileNav({ cartCount, onCart }) {
                 aria-current={isActive ? 'page' : undefined}
                 className={`group relative flex h-12 items-center rounded-full px-2.5 transition-all min-[400px]:px-3 duration-300 ${
                   isActive
-                    ? 'bg-white text-ink'
-                    : 'text-white/70 hover:bg-white/15 hover:text-white'
+                    ? dark
+                      ? 'bg-ink text-white'
+                      : 'bg-white text-ink'
+                    : dark
+                      ? 'text-ink/60 hover:bg-black/10 hover:text-ink'
+                      : 'text-white/70 hover:bg-white/15 hover:text-white'
                 }`}
               >
                 <Icon size={20} strokeWidth={2.2} />

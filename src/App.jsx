@@ -58,7 +58,7 @@ export default function App() {
           arrowsOn={overCollection}
         />
       </main>
-      <MobileNav cartCount={cartCount} onCart={() => setCartOpen(true)} />
+      <MobileNav cartCount={cartCount} onCart={() => setCartOpen(true)} dark={dark} />
       <CartPanel
         open={cartOpen}
         dark={dark}

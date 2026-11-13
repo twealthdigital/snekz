@@ -895,3 +895,12 @@ body {
 .pg-btn[aria-current="page"] { background: var(--fg); color: var(--frame-fg); }
 .pg-btn[aria-current="page"]:hover:not(:disabled) { background: var(--fg); }
 .pg-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+
+/* ---- collection: no bottom notch, no extra frame band under it ---- */
+.frame-clip-bottom,
+#new-collection .frame-clip-bottom { clip-path: none; }
+#new-collection.hero-frame { padding-bottom: var(--pad); }
+@media (max-width: 767.98px) {
+  #new-collection.hero-frame { padding-bottom: 0; }
+}
