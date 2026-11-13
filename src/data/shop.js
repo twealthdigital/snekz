@@ -9,8 +9,8 @@ export const shopItems = [
     tag: 'New drop',
     price: '$189',
     colour: { name: 'Black', hex: '#0b0b0b' },
-    image: '/images/velocity-1.png',
-    hover: '/images/velocity-1-2.png',
+    image: '/images/velocity-1.webp',
+    hover: '/images/velocity-1-2.webp',
   },
   {
     id: 'velocity-stone',
@@ -19,8 +19,8 @@ export const shopItems = [
     tag: '',
     price: '$189',
     colour: { name: 'Stone', hex: '#d4d4d0' },
-    image: '/images/velocity-2.png',
-    hover: '/images/velocity-2-2.png',
+    image: '/images/velocity-2.webp',
+    hover: '/images/velocity-2-2.webp',
   },
   {
     id: 'velocity-volt',
@@ -29,8 +29,8 @@ export const shopItems = [
     tag: 'Limited',
     price: '$189',
     colour: { name: 'Volt', hex: '#ff4d00' },
-    image: '/images/velocity-3.png',
-    hover: '/images/velocity-3-2.png',
+    image: '/images/velocity-3.webp',
+    hover: '/images/velocity-3-2.webp',
   },
   {
     id: 'velocity-og',
@@ -39,7 +39,7 @@ export const shopItems = [
     tag: '',
     price: '$199',
     colour: { name: 'Black', hex: '#0b0b0b' },
-    image: '/images/velocity.png',
+    image: '/images/velocity.webp',
     hover: '',
   },
   {
@@ -49,8 +49,8 @@ export const shopItems = [
     tag: 'Bestseller',
     price: '$159',
     colour: { name: 'Stone', hex: '#d4d4d0' },
-    image: '/images/velocity-2-3.png',
-    hover: '/images/velocity-2-4.png',
+    image: '/images/velocity-2-3.webp',
+    hover: '/images/velocity-2-4.webp',
   },
   {
     id: 'shop-street-lo',
@@ -59,7 +59,7 @@ export const shopItems = [
     tag: '',
     price: '$139',
     colour: { name: 'Black', hex: '#0b0b0b' },
-    image: '/images/velocity-1-3.png',
-    hover: '/images/velocity-1-4.png',
+    image: '/images/velocity-1-3.webp',
+    hover: '/images/velocity-1-4.webp',
   },
 ]

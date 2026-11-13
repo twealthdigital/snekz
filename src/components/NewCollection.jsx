@@ -1,12 +1,11 @@
 import { useState, useRef, useEffect } from 'react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
 import ImageSlot from './ImageSlot'
 import ShoeStage from './ShoeStage'
  
 import { products } from '../data/products'
 
-export default function NewCollection({ onAddToCart, dark, arrowsOn }) {
-  const [pIndex, setPIndex] = useState(0)
+export default function NewCollection({ onAddToCart, dark }) {
+  const [pIndex] = useState(0)
   const [imgIndex, setImgIndex] = useState(0)
   const [added, setAdded] = useState(false)
   const [spin, setSpin] = useState({ key: '', n: 0 })
@@ -66,12 +65,6 @@ export default function NewCollection({ onAddToCart, dark, arrowsOn }) {
     }
   }
 
-  const go = (dir) => {
-    setPIndex((i) => (i + dir + products.length) % products.length)
-    setImgIndex(0)
- 
-  }
-
   const handleAdd = () => {
  
     onAddToCart({ id: product.id, color: imgIndex })
@@ -79,28 +72,9 @@ export default function NewCollection({ onAddToCart, dark, arrowsOn }) {
     setTimeout(() => setAdded(false), 1800)
   }
 
-  const arrowBase =
-    `absolute lg:fixed z-[36] grid h-10 w-10 place-items-center rounded-full bg-[var(--frame)] text-[var(--frame-fg)] transition hover:text-accent top-[17%] max-md:top-[calc(51%-20px)] lg:top-1/2 lg:-translate-y-1/2 arrow-tab ${arrowsOn ? '' : 'lg:pointer-events-none lg:opacity-0'}`
-
   return (
     <section id="new-collection" aria-label="New collection" className={`${dark ? 'hero-dark' : 'hero-light'} hero-frame hero-join-top hero-join-bottom`}>
  
-
-      {/* arrows live on the wide side panels */}
-      <button
-        onClick={() => go(-1)}
-        aria-label="Previous sneaker"
-        className={`${arrowBase} left-3 arrow-tab-left`}
-      >
-        <ChevronLeft size={20} />
-      </button>
-      <button
-        onClick={() => go(1)}
-        aria-label="Next sneaker"
-        className={`${arrowBase} right-3 arrow-tab-right`}
-      >
-        <ChevronRight size={20} />
-      </button>
 
       {/* light / dark panel */}
       <div className="frame-clip-bottom panel-bg relative min-h-[calc(100svh-7rem)] overflow-hidden pb-16 pt-14 max-md:flex max-md:flex-col lg:h-full lg:min-h-0 lg:pb-0 lg:pt-0">
@@ -129,14 +103,14 @@ export default function NewCollection({ onAddToCart, dark, arrowsOn }) {
         <div
           ref={thumbsRef}
           onScroll={onThumbScroll}
-          className="thumb-scroll relative z-10 mt-2 flex justify-center gap-3 max-md:order-3 lg:absolute lg:left-[calc(10%-14px)] lg:top-[62%] lg:mt-0 lg:h-[340px] lg:-translate-y-1/2 lg:flex-col lg:items-center lg:justify-start lg:gap-4 lg:snap-y lg:snap-mandatory lg:overflow-y-auto lg:pl-[14px] lg:pr-[100px] lg:py-[122px]"
+          className="thumb-scroll relative z-10 mt-2 flex justify-center gap-3 sm:gap-4 max-md:order-3 lg:absolute lg:left-[calc(10%-14px)] lg:top-[62%] lg:mt-0 lg:h-[340px] lg:-translate-y-1/2 lg:flex-col lg:items-center lg:justify-start lg:gap-4 lg:snap-y lg:snap-mandatory lg:overflow-y-auto lg:pl-[14px] lg:pr-[100px] lg:py-[122px]"
         >
-          {product.images.map((src, i) => (
+          {(product.thumbs ?? product.images).map((src, i) => (
             <button
               key={src}
               onClick={() => setImgIndex(i)}
               aria-label={`View image ${i + 1}`}
-              className={`h-[72px] w-[72px] shrink-0 snap-center border-2 bg-[var(--thumb)] transition-all duration-300 lg:h-[96px] lg:w-[96px] ${
+              className={`h-[clamp(84px,25vw,124px)] w-[clamp(84px,25vw,124px)] shrink-0 snap-center border-2 bg-[var(--thumb)] transition-all duration-300 lg:h-[96px] lg:w-[96px] ${
                 imgIndex === i
                   ? 'relative z-10 border-[var(--fg)] shadow-[0_14px_34px_rgba(0,0,0,0.3)] lg:scale-125 lg:translate-x-12'
                   : 'border-transparent opacity-60 hover:opacity-100 lg:scale-90 lg:-translate-x-2'
@@ -172,8 +146,8 @@ export default function NewCollection({ onAddToCart, dark, arrowsOn }) {
           </p>
         </div>
 
-        {/* counter */}
-        <div className="pointer-events-none absolute right-[9%] top-[12%] z-20 hidden max-md:order-5 items-end gap-2 lg:flex">
+        {/* counter (only worth showing with more than one sneaker) */}
+        <div className={`pointer-events-none absolute right-[9%] top-[12%] z-20 hidden max-md:order-5 items-end gap-2 ${products.length > 1 ? 'lg:flex' : ''}`}>
           <span
             key={pIndex}
             className="count-in outline-text text-[7vw] font-black italic leading-[0.9]"

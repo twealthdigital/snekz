@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Archivo", system-ui, sans-serif;
+  --font-sans: "Archivo Variable", "Archivo", system-ui, sans-serif;
   --color-ink: #0b0b0b;
   --color-paper: #f3f3f1;
   --color-accent: #ff4d00;
@@ -1219,4 +1219,41 @@ body {
   #home { --hl: clamp(3.25rem, 15vw, 4.5rem); }
   #home .hero-h1 { font-size: var(--hl); }
   #home .hero-stage { margin-top: calc(0.5rem - 2.64 * (var(--hl) - 3rem)); }
+}
+
+
+/* ---------- touch: no blue flash, no tap delay, instant press feedback ---------- */
+html {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  touch-action: manipulation; /* kills the double-tap delay, pinch zoom still works */
+}
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+a, button, [role='button'], label, summary, select {
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+}
+button, [role='button'] {
+  user-select: none;
+  -webkit-user-select: none;
+}
+img {
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
+}
+/* no focus box after a tap or click; keyboard users still get one */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+@layer base {
+  @media (hover: none) and (pointer: coarse) {
+    :where(button, a[href], [role='button']) {
+      transition: scale 0.14s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    :where(button, a[href], [role='button']):active {
+      scale: 0.95;
+    }
+  }
 }

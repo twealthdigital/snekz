@@ -26,43 +26,21 @@ export const products = [
       { name: 'Volt', hex: '#ff4d00' },
     ],
     images: [
-      '/images/velocity-1.png',
-      '/images/velocity-2.png',
-      '/images/velocity-3.png',
+      '/images/velocity-1.webp',
+      '/images/velocity-2.webp',
+      '/images/velocity-3.webp',
+    ],
+    // small versions for the thumbnails and the cart (fast to load)
+    thumbs: [
+      '/images/velocity-1-sm.webp',
+      '/images/velocity-2-sm.webp',
+      '/images/velocity-3-sm.webp',
     ],
     // extra angles per colour, in order: front, side, back
     views: [
-      ['/images/velocity-1-2.png', '/images/velocity-1-3.png', '/images/velocity-1-4.png'],
-      ['/images/velocity-2-2.png', '/images/velocity-2-3.png', '/images/velocity-2-4.png'],
-      ['/images/velocity-3-2.png', '/images/velocity-3-3.png', '/images/velocity-3-4.png'],
+      ['/images/velocity-1-2.webp', '/images/velocity-1-3.webp', '/images/velocity-1-4.webp'],
+      ['/images/velocity-2-2.webp', '/images/velocity-2-3.webp', '/images/velocity-2-4.webp'],
+      ['/images/velocity-3-2.webp', '/images/velocity-3-3.webp', '/images/velocity-3-4.webp'],
     ],
-  },
-  {
-    id: 'apex-runner',
-    tag: 'Bestseller',
-    name: 'Apex Runner',
-    line: 'SNEKZ Performance',
-    blurb: 'Light underfoot. Loud on the street.',
-    features: ['Breathable knit', 'Responsive foam midsole', 'Grip outsole', 'All-day wear'],
-    price: '$159',
-    colors: [
-      { name: 'White', hex: '#ffffff' },
-      { name: 'Black', hex: '#0b0b0b' },
-    ],
-    images: ['/images/apex-1.png', '/images/apex-2.png', '/images/apex-3.png'],
-  },
-  {
-    id: 'street-lo',
-    tag: 'Limited',
-    name: 'Street Lo',
-    line: 'SNEKZ Classics',
-    blurb: 'Clean lines. Zero effort.',
-    features: ['Premium leather', 'Vulcanised sole', 'Padded collar', 'Timeless profile'],
-    price: '$139',
-    colors: [
-      { name: 'Cream', hex: '#efe9dc' },
-      { name: 'Black', hex: '#0b0b0b' },
-    ],
-    images: ['/images/street-1.png', '/images/street-2.png', '/images/street-3.png'],
-  },
+  }
 ]

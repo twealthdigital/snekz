@@ -122,7 +122,8 @@ export default function Hero({ dark }) {
               />
               <div className="hero-float h-full w-full">
                 <ImageSlot
-                  src="/images/velocity.png"
+                  src="/images/velocity.webp"
+                  priority
                   alt="Velocity V1 sneaker"
                   className="h-full w-full drop-shadow-[0_18px_18px_rgba(0,0,0,0.18)]"
                 />

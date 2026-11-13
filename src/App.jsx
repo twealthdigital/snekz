@@ -1,14 +1,22 @@
-import { useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import Hero from './components/Hero'
 import Shop from './components/Shop'
 import NewCollection from './components/NewCollection'
 import ForYou from './components/ForYou'
 import MobileNav from './components/MobileNav'
-import CartPanel from './components/CartPanel'
-import AuthDrop from './components/AuthDrop'
 import Cta from './components/Cta'
 import { FixedHeader } from './components/Header'
 import ThemeToggle from './components/ThemeToggle'
+
+// cart and account box are hidden until opened, so they load after the page is up
+const loadCart = () => import('./components/CartPanel')
+const loadAuth = () => import('./components/AuthDrop')
+const CartPanel = lazy(loadCart)
+const AuthDrop = lazy(loadAuth)
+if (typeof window !== 'undefined') {
+  const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 1200))
+  window.addEventListener('load', () => idle(() => { loadCart(); loadAuth() }), { once: true })
+}
 
 // the bottom tab bar replaces the header links on anything narrower than 1024px
 const tabBarShown = () => window.matchMedia('(max-width: 1023.98px)').matches
@@ -60,20 +68,11 @@ export default function App() {
     )
     if (el) openAuth(el, tab)
   }
-  const [overCollection, setOverCollection] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [section, setSection] = useState('home') // the section currently on screen
 
-  // the fixed header takes the collection's light/dark look once it is scrolled over it
   useEffect(() => {
     const onScroll = () => {
-      const el = document.getElementById('new-collection')
-      const fy = document.getElementById('for-you')
-      if (el) {
-        const h = window.innerHeight
-        // the collection's side arrows hide once the For You section takes over the screen
-        setOverCollection(el.getBoundingClientRect().top <= h * 0.55 && !(fy && fy.getBoundingClientRect().top <= h * 0.45))
-      }
       // phones: the first header scrolls away on its own, the new one drops in once it has left
       setScrolled(window.scrollY > (window.innerWidth < 768 ? 64 : 10))
 
@@ -107,15 +106,12 @@ export default function App() {
       <main>
         <Hero dark={dark} />
         <Shop dark={dark} onAddToCart={addToCart} />
-        <NewCollection
-          onAddToCart={addToCart}
-          dark={dark}
-          arrowsOn={overCollection}
-        />
+        <NewCollection onAddToCart={addToCart} dark={dark} />
         <ForYou dark={dark} />
         <Cta dark={dark} onJoin={() => openAccount('signup')} onSignIn={() => openAccount('signin')} />
       </main>
       <MobileNav section={section} dark={dark} authOpen={auth.open} onAccount={openAuth} />
+      <Suspense fallback={null}>
       <AuthDrop {...auth} dark={dark} onTab={(tab) => setAuth((a) => ({ ...a, tab }))} onClose={closeAuth} />
       <CartPanel
         open={cartOpen}
@@ -126,6 +122,7 @@ export default function App() {
         onRemove={removeItem}
         onClear={clearCart}
       />
+      </Suspense>
     </>
   )
 }

@@ -3,7 +3,7 @@ import { ImagePlus } from 'lucide-react'
 
 // Shows your image when the file exists, otherwise a labelled placeholder
 // that tells you exactly which file to drop in.
-export default function ImageSlot({ src, alt, className = '', fit = 'object-contain' }) {
+export default function ImageSlot({ src, alt, className = '', fit = 'object-contain', priority = false }) {
   const [failed, setFailed] = useState(false)
 
   useEffect(() => setFailed(false), [src])
@@ -28,6 +28,9 @@ export default function ImageSlot({ src, alt, className = '', fit = 'object-cont
       onError={() => setFailed(true)}
       className={`${fit} ${className}`}
       draggable={false}
+      loading={priority ? 'eager' : 'lazy'}
+      decoding="async"
+      fetchPriority={priority ? 'high' : undefined}
     />
   )
 }

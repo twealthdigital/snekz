@@ -46,7 +46,7 @@ export default function CartPanel({ open, dark, items, onClose, onQty, onRemove,
         return s ? { ...it, product: s, colour: s.colour, image: s.image } : null
       }
       const colour = product.colors[Math.min(it.color, product.colors.length - 1)]
-      return { ...it, product, colour, image: product.images[it.color] ?? product.images[0] }
+      return { ...it, product, colour, image: (product.thumbs ?? product.images)[it.color] ?? (product.thumbs ?? product.images)[0] }
     })
     .filter(Boolean)
   const count = lines.reduce((n, l) => n + l.qty, 0)
