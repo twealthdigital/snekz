@@ -148,16 +148,9 @@ export default function Hero({ dark }) {
               Engineered for comfort. Designed for speed.
             </p>
 
-            {/* the classic: skewed black block, orange offset, orange sweeps in on hover */}
-            <a
-              href="#new-collection"
-              className="group relative mt-7 inline-flex -skew-x-12 items-center overflow-hidden bg-ink text-white shadow-[5px_5px_0_0_var(--color-accent)] transition-all duration-300 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[9px_9px_0_0_var(--color-ink)] active:translate-x-0 active:translate-y-0 active:shadow-[2px_2px_0_0_var(--color-accent)]"
-            >
-              <span
-                aria-hidden
-                className="absolute inset-0 -translate-x-full bg-accent transition-transform duration-300 ease-out group-hover:translate-x-0"
-              />
-              <span className="relative flex skew-x-12 items-center gap-3 px-7 py-3.5 text-xs font-black uppercase tracking-[0.2em]">
+            {/* the classic button: black block (white in dark mode), orange sweeps in on hover */}
+            <a href="#new-collection" className="btn-classic group mt-7 inline-flex">
+              <span>
                 Shop now
                 <ArrowRight
                   size={18}

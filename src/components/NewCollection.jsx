@@ -1,11 +1,11 @@
 import { useState, useRef, useEffect } from 'react'
-import { ChevronLeft, ChevronRight, Sun, Moon, Check } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Check } from 'lucide-react'
 import ImageSlot from './ImageSlot'
 import ShoeStage from './ShoeStage'
  
 import { products } from '../data/products'
 
-export default function NewCollection({ onAddToCart, dark, setDark, arrowsOn }) {
+export default function NewCollection({ onAddToCart, dark, arrowsOn }) {
   const [pIndex, setPIndex] = useState(0)
   const [imgIndex, setImgIndex] = useState(0)
   const [added, setAdded] = useState(false)
@@ -207,32 +207,8 @@ export default function NewCollection({ onAddToCart, dark, setDark, arrowsOn }) 
 
         {/* bottom row: theme toggle, 360, price */}
         <div className="relative z-10 mt-6 flex items-center justify-between px-5 lg:static lg:mt-0 lg:px-0">
-          <button
-            onClick={() => setDark((d) => !d)}
-            aria-label="Toggle light / dark"
-            className="relative flex h-8 w-[64px] items-center justify-between rounded-full bg-[var(--frame)] p-1 ring-1 ring-[var(--line)] lg:absolute lg:bottom-[7%] lg:left-[10%]"
-          >
-            <span
-              aria-hidden
-              className={`absolute left-1 top-1 h-6 w-6 rounded-full bg-[var(--frame-fg)] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                dark ? 'translate-x-8' : 'translate-x-0'
-              }`}
-            />
-            <span
-              className={`relative grid h-6 w-6 place-items-center transition duration-500 ${
-                !dark ? 'text-[var(--frame)]' : 'text-[var(--frame-fg)] opacity-60'
-              }`}
-            >
-              <Sun size={14} />
-            </span>
-            <span
-              className={`relative grid h-6 w-6 place-items-center transition duration-500 ${
-                dark ? 'text-[var(--frame)]' : 'text-[var(--frame-fg)] opacity-60'
-              }`}
-            >
-              <Moon size={14} />
-            </span>
-          </button>
+          {/* keeps the 360 button centred on phones (the theme toggle is now fixed on screen) */}
+          <span aria-hidden className="w-[64px] lg:hidden" />
 
           <button
             onClick={rotate}

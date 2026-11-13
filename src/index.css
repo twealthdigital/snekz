@@ -799,3 +799,28 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .cart-wrap, .cart-dim { transition: none; }
 }
+
+/* ---- dark mode: the classic buttons turn white (black text) ---- */
+.hero-dark .panel-bg .btn-classic {
+  background: var(--fg);
+  color: var(--frame-fg);
+}
+.hero-dark .panel-bg .btn-classic:hover {
+  color: #fff;
+}
+
+/* ---- theme toggle: fixed on screen, quick fade, instant press feel ---- */
+.hero-frame,
+.frame-sides,
+.site-header,
+.theme-toggle {
+  transition-duration: 0.3s;
+}
+.theme-toggle {
+  transition-property: --frame, --frame-fg, --line, transform;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 6px 18px rgb(0 0 0 / 0.25);
+}
+.theme-toggle:active {
+  transform: scale(0.92);
+}

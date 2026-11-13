@@ -4,6 +4,7 @@ import NewCollection from './components/NewCollection'
 import MobileNav from './components/MobileNav'
 import CartPanel from './components/CartPanel'
 import { FixedHeader } from './components/Header'
+import ThemeToggle from './components/ThemeToggle'
 
 export default function App() {
   const [cart, setCart] = useState([]) // [{ id, color, qty }]
@@ -45,12 +46,12 @@ export default function App() {
         <i className="frame-side frame-side-l" />
         <i className="frame-side frame-side-r" />
       </div>
+      <ThemeToggle dark={dark} onToggle={() => setDark((d) => !d)} />
       <main>
         <Hero dark={dark} />
         <NewCollection
           onAddToCart={addToCart}
           dark={dark}
-          setDark={setDark}
           arrowsOn={overCollection}
         />
       </main>
