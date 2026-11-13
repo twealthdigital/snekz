@@ -80,7 +80,7 @@ export default function NewCollection({ onAddToCart, dark, arrowsOn }) {
   }
 
   const arrowBase =
-    `absolute lg:fixed z-[36] grid h-10 w-10 place-items-center rounded-full bg-[var(--frame)] text-[var(--frame-fg)] transition hover:text-accent top-[17%] lg:top-1/2 lg:-translate-y-1/2 arrow-tab ${arrowsOn ? '' : 'lg:pointer-events-none lg:opacity-0'}`
+    `absolute lg:fixed z-[36] grid h-10 w-10 place-items-center rounded-full bg-[var(--frame)] text-[var(--frame-fg)] transition hover:text-accent top-[17%] max-md:top-[calc(51%-20px)] lg:top-1/2 lg:-translate-y-1/2 arrow-tab ${arrowsOn ? '' : 'lg:pointer-events-none lg:opacity-0'}`
 
   return (
     <section id="new-collection" aria-label="New collection" className={`${dark ? 'hero-dark' : 'hero-light'} hero-frame hero-join-top`}>
@@ -103,11 +103,11 @@ export default function NewCollection({ onAddToCart, dark, arrowsOn }) {
       </button>
 
       {/* light / dark panel */}
-      <div className="frame-clip-bottom panel-bg relative min-h-[calc(100svh-7rem)] overflow-hidden rounded-b-[22px] pb-16 pt-14 lg:h-full lg:min-h-0 lg:pb-0 lg:pt-0">
+      <div className="frame-clip-bottom panel-bg relative min-h-[calc(100svh-7rem)] overflow-hidden rounded-b-[22px] pb-16 pt-14 max-md:flex max-md:flex-col lg:h-full lg:min-h-0 lg:pb-0 lg:pt-0">
  
 
         {/* ghost wordmark + shoe */}
-        <div className="relative mx-auto mt-1 max-md:mt-6 max-md:-mb-10 aspect-[4/3] w-full max-w-[520px] lg:pointer-events-none lg:absolute lg:inset-0 lg:mt-0 lg:aspect-auto lg:max-w-none">
+        <div className="relative mx-auto mt-1 max-md:order-2 max-md:mt-2 aspect-[4/3] w-full max-w-[520px] lg:pointer-events-none lg:absolute lg:inset-0 lg:mt-0 lg:aspect-auto lg:max-w-none">
           <span
             aria-hidden
             className="pointer-events-none absolute left-1/2 top-[42%] -translate-x-1/2 -translate-y-1/2 select-none whitespace-nowrap text-[26vw] font-black uppercase italic leading-none tracking-tighter text-[var(--ghost)] lg:top-[35%] lg:text-[24vw]"
@@ -129,7 +129,7 @@ export default function NewCollection({ onAddToCart, dark, arrowsOn }) {
         <div
           ref={thumbsRef}
           onScroll={onThumbScroll}
-          className="thumb-scroll relative z-10 mt-2 flex justify-center gap-3 lg:absolute lg:left-[calc(10%-14px)] lg:top-[62%] lg:mt-0 lg:h-[340px] lg:-translate-y-1/2 lg:flex-col lg:items-center lg:justify-start lg:gap-4 lg:snap-y lg:snap-mandatory lg:overflow-y-auto lg:pl-[14px] lg:pr-[100px] lg:py-[122px]"
+          className="thumb-scroll relative z-10 mt-2 flex justify-center gap-3 max-md:order-3 lg:absolute lg:left-[calc(10%-14px)] lg:top-[62%] lg:mt-0 lg:h-[340px] lg:-translate-y-1/2 lg:flex-col lg:items-center lg:justify-start lg:gap-4 lg:snap-y lg:snap-mandatory lg:overflow-y-auto lg:pl-[14px] lg:pr-[100px] lg:py-[122px]"
         >
           {product.images.map((src, i) => (
             <button
@@ -153,7 +153,7 @@ export default function NewCollection({ onAddToCart, dark, arrowsOn }) {
         {/* headline */}
         <div
           key={product.id}
-          className="count-in pointer-events-none relative z-20 mx-5 mt-5 max-md:mt-2 lg:absolute lg:left-[8%] lg:top-[13%] lg:mx-0 lg:mt-0"
+          className="count-in pointer-events-none relative z-20 mx-5 mt-5 max-md:order-1 max-md:mt-4 lg:absolute lg:left-[8%] lg:top-[13%] lg:mx-0 lg:mt-0"
         >
           <span className="inline-block -skew-x-12 bg-accent px-3 py-1 text-[11px] font-black uppercase tracking-[0.18em] text-white">
             {product.tag}
@@ -173,7 +173,7 @@ export default function NewCollection({ onAddToCart, dark, arrowsOn }) {
         </div>
 
         {/* counter */}
-        <div className="pointer-events-none absolute right-[9%] top-[12%] z-20 hidden items-end gap-2 lg:flex">
+        <div className="pointer-events-none absolute right-[9%] top-[12%] z-20 hidden max-md:order-5 items-end gap-2 lg:flex">
           <span
             key={pIndex}
             className="count-in outline-text text-[7vw] font-black italic leading-[0.9]"
@@ -186,7 +186,7 @@ export default function NewCollection({ onAddToCart, dark, arrowsOn }) {
         </div>
 
         {/* bottom row: theme toggle, 360, price */}
-        <div className="relative z-10 mt-6 flex items-center justify-between px-5 lg:static lg:mt-0 lg:px-0">
+        <div className="relative z-10 mt-6 flex items-center justify-between px-5 max-md:order-4 lg:static lg:mt-0 lg:px-0">
           {/* keeps the 360 button centred on phones (the theme toggle is now fixed on screen) */}
           <span aria-hidden className="w-[64px] lg:hidden" />
 

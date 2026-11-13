@@ -63,11 +63,11 @@ export default function Hero({ dark }) {
     <section id="home" aria-label="Velocity" className={`${dark ? 'hero-dark' : 'hero-light'} hero-frame hero-join-bottom`}>
  
 
-      <div className="frame-clip-top panel-bg relative min-h-[calc(100svh-7px)] overflow-hidden rounded-t-[22px] pb-16 pt-14 lg:h-full lg:min-h-0 lg:pb-0 lg:pt-0">
+      <div className="frame-clip-top panel-bg relative min-h-[calc(100svh-7px)] overflow-hidden rounded-t-[22px] pb-16 pt-14 max-md:flex max-md:flex-col lg:h-full lg:min-h-0 lg:pb-0 lg:pt-0">
  
 
         {/* stage: ghost word, slash, speed lines, shoe */}
-        <div ref={stage} className="relative mx-auto mt-1 max-md:mt-6 aspect-[4/3] w-full max-w-[520px] lg:pointer-events-none lg:absolute lg:inset-0 lg:mt-0 lg:aspect-auto lg:max-w-none">
+        <div ref={stage} className="relative mx-auto mt-1 max-md:order-2 max-md:mt-2 aspect-[4/3] w-full max-w-[520px] lg:pointer-events-none lg:absolute lg:inset-0 lg:mt-0 lg:aspect-auto lg:max-w-none">
           <span
             aria-hidden
             className="pointer-events-none absolute left-1/2 top-[44%] -translate-x-1/2 -translate-y-1/2 select-none whitespace-nowrap text-[24vw] font-black uppercase italic leading-none tracking-tighter text-[var(--ghost)] lg:top-[48%] lg:text-[17vw]"
@@ -132,8 +132,8 @@ export default function Hero({ dark }) {
         </div>
 
         {/* copy + button + perks */}
-        <div className="relative z-20 mx-5 mt-4 max-md:-mt-12 flex flex-col gap-8 lg:absolute lg:bottom-[11%] lg:left-[8%] lg:top-[14%] lg:mx-0 lg:mt-0 lg:justify-between lg:gap-0">
-          <div className="count-in">
+        <div className="relative z-20 mx-5 mt-4 flex flex-col gap-8 max-md:contents lg:absolute lg:bottom-[11%] lg:left-[8%] lg:top-[14%] lg:mx-0 lg:mt-0 lg:justify-between lg:gap-0">
+          <div className="count-in max-md:relative max-md:z-20 max-md:order-1 max-md:mx-5 max-md:mt-4">
             <span className="inline-block -skew-x-12 bg-accent px-3 py-1 text-[11px] font-black uppercase tracking-[0.18em] text-white">
               New arrival
             </span>
@@ -161,7 +161,7 @@ export default function Hero({ dark }) {
             </a>
           </div>
 
-          <ul className="flex divide-x divide-[var(--line)]">
+          <ul className="flex divide-x divide-[var(--line)] max-md:relative max-md:z-20 max-md:order-3 max-md:mx-5 max-md:mt-6">
             {perks.map(({ icon: Icon, label }) => (
               <li key={label} className="flex max-w-[110px] flex-col gap-2 px-3 first:pl-0 lg:px-5">
                 <Icon size={20} strokeWidth={1.6} />
