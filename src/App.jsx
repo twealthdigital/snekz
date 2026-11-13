@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import Hero from './components/Hero'
+import Shop from './components/Shop'
 import NewCollection from './components/NewCollection'
 import MobileNav from './components/MobileNav'
 import CartPanel from './components/CartPanel'
@@ -50,6 +51,7 @@ export default function App() {
       <ThemeToggle dark={dark} scrolled={scrolled} onToggle={() => setDark((d) => !d)} />
       <main>
         <Hero dark={dark} />
+        <Shop dark={dark} onAddToCart={addToCart} />
         <NewCollection
           onAddToCart={addToCart}
           dark={dark}

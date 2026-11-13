@@ -845,3 +845,53 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .site-header.site-header-in, .drop-in { animation: none; }
 }
+
+/* ---- shop section: sits between the hero and the collection, flat tone so both joins are seamless ---- */
+@media (min-width: 1024px) {
+  .hero-frame.shop-section { height: auto; min-height: 0; }
+}
+.shop-panel { background: color-mix(in srgb, var(--p1) 40%, var(--p2)); }
+
+/* smaller classic button for the cards */
+.btn-classic.btn-classic-sm { box-shadow: 3px 3px 0 0 var(--color-accent); }
+.btn-classic.btn-classic-sm:hover { box-shadow: 6px 6px 0 0 var(--fg, var(--color-ink)); }
+.btn-classic.btn-classic-sm > span { gap: 0.4rem; padding: 0.6rem 1rem; font-size: 10px; }
+
+/* pagination buttons: skewed squares, orange sweeps up on hover */
+.pg-btn {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  overflow: hidden;
+  border: 2px solid var(--fg);
+  font-size: 13px;
+  font-style: italic;
+  font-weight: 900;
+  transform: skewX(-12deg);
+  transition: color 0.3s, border-color 0.3s, box-shadow 0.3s, background-color 0.3s;
+}
+.pg-btn > span {
+  position: relative;
+  display: grid;
+  place-items: center;
+  transform: skewX(12deg);
+}
+.pg-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-accent);
+  transform: translateY(101%);
+  transition: transform 0.3s ease-out;
+}
+.pg-btn:hover:not(:disabled) {
+  color: #fff;
+  border-color: var(--color-accent);
+  box-shadow: 4px 4px 0 0 var(--color-accent);
+}
+.pg-btn:hover:not(:disabled)::before { transform: translateY(0); }
+.pg-btn[aria-current="page"] { background: var(--fg); color: var(--frame-fg); }
+.pg-btn[aria-current="page"]:hover:not(:disabled) { background: var(--fg); }
+.pg-btn:disabled { opacity: 0.3; cursor: not-allowed; }

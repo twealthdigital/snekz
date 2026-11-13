@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { ArrowRight, ChevronRight, Minus, Plus, ShoppingBag, Trash2, X } from 'lucide-react'
 import ImageSlot from './ImageSlot'
 import { products } from '../data/products'
+import { shopItems } from '../data/shop'
 
 const money = (n) => `$${n.toLocaleString()}`
 const priceOf = (p) => Number(p.price.replace(/[^0-9.]/g, ''))
@@ -40,7 +41,10 @@ export default function CartPanel({ open, dark, items, onClose, onQty, onRemove,
   const lines = items
     .map((it) => {
       const product = products.find((p) => p.id === it.id)
-      if (!product) return null
+      if (!product) {
+        const s = shopItems.find((x) => x.id === it.id)
+        return s ? { ...it, product: s, colour: s.colour, image: s.image } : null
+      }
       const colour = product.colors[Math.min(it.color, product.colors.length - 1)]
       return { ...it, product, colour, image: product.images[it.color] ?? product.images[0] }
     })
