@@ -9,7 +9,7 @@ export default function MobileNav({ cartCount, onCart }) {
       aria-label="Mobile"
       className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 md:hidden"
     >
-      <ul className="flex items-center gap-1 rounded-full bg-ink/95 p-1.5 shadow-[0_12px_40px_rgba(0,0,0,0.35)] backdrop-blur-xl">
+      <ul className="flex items-center gap-0.5 rounded-full bg-ink/95 p-1 shadow-[0_12px_40px_rgba(0,0,0,0.35)] backdrop-blur-xl">
         {mobileLinks.map(({ id, label, href, icon: Icon }) => {
           const isActive = active === id
           return (
@@ -26,7 +26,7 @@ export default function MobileNav({ cartCount, onCart }) {
                 }}
                 aria-label={label}
                 aria-current={isActive ? 'page' : undefined}
-                className={`group relative flex h-12 items-center rounded-full px-3.5 transition-all duration-300 ${
+                className={`group relative flex h-12 items-center rounded-full px-2.5 transition-all min-[400px]:px-3 duration-300 ${
                   isActive
                     ? 'bg-white text-ink'
                     : 'text-white/70 hover:bg-white/15 hover:text-white'
@@ -36,10 +36,10 @@ export default function MobileNav({ cartCount, onCart }) {
 
                 {/* label slides out beside the icon on hover / when active */}
                 <span
-                  className={`overflow-hidden whitespace-nowrap text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
+                  className={`overflow-hidden whitespace-nowrap text-[11px] font-bold uppercase tracking-wide transition-all duration-300 ${
                     isActive
-                      ? 'ml-2 max-w-24 opacity-100'
-                      : 'max-w-0 opacity-0 group-hover:ml-2 group-hover:max-w-24 group-hover:opacity-100'
+                      ? 'ml-2 max-w-[5.5rem] opacity-100'
+                      : 'max-w-0 opacity-0 group-hover:ml-2 group-hover:max-w-[5.5rem] group-hover:opacity-100'
                   }`}
                 >
                   {label}

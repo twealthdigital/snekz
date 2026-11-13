@@ -1,13 +1,13 @@
 import { Sun, Moon } from 'lucide-react'
 
 // Light / dark switch. Fixed to the screen, so it is there in every section.
-export default function ThemeToggle({ dark, onToggle }) {
+export default function ThemeToggle({ dark, scrolled, onToggle }) {
   return (
     <button
       onClick={onToggle}
       aria-label="Toggle light / dark"
       aria-pressed={dark}
-      className={`${dark ? 'hero-dark' : 'hero-light'} theme-toggle fixed right-14 top-3 z-[42] flex h-8 w-[64px] items-center justify-between rounded-full bg-[var(--frame)] p-1 ring-1 ring-[var(--line)] md:bottom-6 md:left-6 md:right-auto md:top-auto lg:bottom-[5%] lg:left-[10%]`}
+      className={`${dark ? 'hero-dark' : 'hero-light'} theme-toggle ${scrolled ? 'drop-in fixed' : 'absolute'} right-14 top-3 z-[42] flex h-8 w-[64px] items-center justify-between rounded-full bg-[var(--frame)] p-1 ring-1 ring-[var(--line)] md:fixed md:bottom-6 md:left-6 md:right-auto md:top-auto lg:bottom-[5%] lg:left-[10%]`}
     >
       <span
         aria-hidden

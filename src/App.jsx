@@ -33,7 +33,8 @@ export default function App() {
     const onScroll = () => {
       const el = document.getElementById('new-collection')
       if (el) setOverCollection(el.getBoundingClientRect().top <= window.innerHeight * 0.55)
-      setScrolled(window.scrollY > 10)
+      // phones: the first header scrolls away on its own, the new one drops in once it has left
+      setScrolled(window.scrollY > (window.innerWidth < 768 ? 64 : 10))
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
@@ -46,7 +47,7 @@ export default function App() {
         <i className="frame-side frame-side-l" />
         <i className="frame-side frame-side-r" />
       </div>
-      <ThemeToggle dark={dark} onToggle={() => setDark((d) => !d)} />
+      <ThemeToggle dark={dark} scrolled={scrolled} onToggle={() => setDark((d) => !d)} />
       <main>
         <Hero dark={dark} />
         <NewCollection

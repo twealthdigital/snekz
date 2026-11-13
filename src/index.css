@@ -824,3 +824,24 @@ body {
 .theme-toggle:active {
   transform: scale(0.92);
 }
+
+
+/* ---- phones: no black side strips, header scrolls away then a new one drops in ---- */
+@keyframes header-drop {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+@media (max-width: 767.98px) {
+  /* take the frame off the sides, so the panels run edge to edge */
+  .hero-frame { padding-left: 0; padding-right: 0; }
+  #new-collection .frame-clip-bottom { border-radius: 0; }
+
+  /* first header lives in the page and scrolls away with it */
+  .site-header { position: absolute; }
+  /* once it has left the screen, a fresh one drops in from the top and stays */
+  .site-header.site-header-in { position: fixed; animation: header-drop 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
+  .drop-in { animation: header-drop 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-header.site-header-in, .drop-in { animation: none; }
+}
