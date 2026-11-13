@@ -4,8 +4,8 @@ import logoDark from '../assets/logo-dark.png'
 import logoWhite from '../assets/logo-white.png'
 
 const links = [
+  { label: 'Home', href: '#home' },
   { label: 'Shop', href: '#shop' },
-  { label: 'All Products', href: '#shop' },
   { label: 'New Collection', href: '#new-collection' },
   { label: 'For You', href: '#for-you' },
 ]
@@ -126,9 +126,8 @@ export default function HeaderBar({ section, cartCount, onSearch, onCart, onAcco
           <Search size={19} />
         </button>
         <nav className="hidden items-center gap-4 text-[11px] font-medium uppercase tracking-wide lg:flex xl:gap-7 xl:text-[13px]">
-          {links.map((l, i) => {
-            // two links share #shop; only the first one lights up
-            const on = l.href === `#${section}` && links.findIndex((x) => x.href === l.href) === i
+          {links.map((l) => {
+            const on = l.href === `#${section}`
             return (
               <a
                 key={l.label}
