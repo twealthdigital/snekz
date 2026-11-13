@@ -900,7 +900,55 @@ body {
 /* ---- collection: no bottom notch, no extra frame band under it ---- */
 .frame-clip-bottom,
 #new-collection .frame-clip-bottom { clip-path: none; }
-#new-collection.hero-frame { padding-bottom: var(--pad); }
+/* the collection now flows straight into the For You section: its background fades into that tone (a background layer, so it never sits on top of the content) */
+#new-collection .frame-clip-bottom {
+  background:
+    linear-gradient(transparent calc(100% - 140px), color-mix(in srgb, var(--p1) 40%, var(--p2))),
+    radial-gradient(circle at 50% 40%, var(--p1) 0%, var(--p2) 78%);
+}
+
+
+/* ---- For You: sliding carousel ---- */
+#for-you.hero-frame { padding-bottom: var(--pad); }
 @media (max-width: 767.98px) {
-  #new-collection.hero-frame { padding-bottom: 0; }
+  #for-you.hero-frame { padding-bottom: 0; }
+}
+.fy-stage {
+  perspective: 1400px;
+  touch-action: pan-y;
+  user-select: none;
+}
+.fy-card {
+  --step: 80%;
+  grid-area: 1 / 1;
+  justify-self: center;
+  transform: translateX(calc(var(--d) * var(--step))) scale(var(--s)) rotateY(var(--ry));
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.8s ease;
+  will-change: transform, opacity;
+}
+@media (min-width: 768px) {
+  .fy-card { --step: 108%; }
+}
+.fy-arrow {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 9999px;
+  background: var(--frame);
+  color: var(--frame-fg);
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s;
+}
+.fy-arrow:hover { transform: scale(1.1); }
+.fy-arrow:active { transform: scale(0.92); }
+.fy-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--faint);
+  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.3s;
+}
+.fy-dot[aria-current="true"] { width: 26px; background: var(--fg); }
+@media (prefers-reduced-motion: reduce) {
+  .fy-card { transition-duration: 0.01s; }
 }

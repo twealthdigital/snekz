@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Hero from './components/Hero'
 import Shop from './components/Shop'
 import NewCollection from './components/NewCollection'
+import ForYou from './components/ForYou'
 import MobileNav from './components/MobileNav'
 import CartPanel from './components/CartPanel'
 import { FixedHeader } from './components/Header'
@@ -33,7 +34,12 @@ export default function App() {
   useEffect(() => {
     const onScroll = () => {
       const el = document.getElementById('new-collection')
-      if (el) setOverCollection(el.getBoundingClientRect().top <= window.innerHeight * 0.55)
+      const fy = document.getElementById('for-you')
+      if (el) {
+        const h = window.innerHeight
+        // the collection's side arrows hide once the For You section takes over the screen
+        setOverCollection(el.getBoundingClientRect().top <= h * 0.55 && !(fy && fy.getBoundingClientRect().top <= h * 0.45))
+      }
       // phones: the first header scrolls away on its own, the new one drops in once it has left
       setScrolled(window.scrollY > (window.innerWidth < 768 ? 64 : 10))
     }
@@ -57,8 +63,9 @@ export default function App() {
           dark={dark}
           arrowsOn={overCollection}
         />
+        <ForYou dark={dark} />
       </main>
-      <MobileNav cartCount={cartCount} onCart={() => setCartOpen(true)} dark={dark} />
+      <MobileNav dark={dark} />
       <CartPanel
         open={cartOpen}
         dark={dark}

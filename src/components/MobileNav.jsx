@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { mobileLinks } from '../data/nav'
 
-export default function MobileNav({ cartCount, onCart, dark }) {
+export default function MobileNav({ dark }) {
   const [active, setActive] = useState('home')
 
   return (
@@ -22,14 +22,7 @@ export default function MobileNav({ cartCount, onCart, dark }) {
             <li key={id}>
               <a
                 href={href}
-                onClick={(e) => {
-                  if (id === 'cart') {
-                    e.preventDefault()
-                    onCart?.()
-                    return
-                  }
-                  setActive(id)
-                }}
+                onClick={() => setActive(id)}
                 aria-label={label}
                 aria-current={isActive ? 'page' : undefined}
                 className={`group relative flex h-12 items-center rounded-full px-2.5 transition-all min-[400px]:px-3 duration-300 ${
@@ -55,11 +48,6 @@ export default function MobileNav({ cartCount, onCart, dark }) {
                   {label}
                 </span>
 
-                {id === 'cart' && cartCount > 0 && (
-                  <span className="absolute right-1 top-1 grid h-4 min-w-4 place-items-center rounded-full bg-accent px-1 text-[9px] font-bold text-white">
-                    {cartCount}
-                  </span>
-                )}
               </a>
             </li>
           )

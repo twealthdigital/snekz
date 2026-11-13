@@ -7,6 +7,7 @@ const links = [
   { label: 'Shop', href: '#shop' },
   { label: 'All Products', href: '#shop' },
   { label: 'New Collection', href: '#new-collection' },
+  { label: 'For You', href: '#for-you' },
 ]
 
 const iconBtn = 'relative grid h-9 w-9 place-items-center rounded-full transition hover:opacity-60'

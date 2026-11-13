@@ -83,7 +83,7 @@ export default function NewCollection({ onAddToCart, dark, arrowsOn }) {
     `absolute lg:fixed z-[36] grid h-10 w-10 place-items-center rounded-full bg-[var(--frame)] text-[var(--frame-fg)] transition hover:text-accent top-[17%] max-md:top-[calc(51%-20px)] lg:top-1/2 lg:-translate-y-1/2 arrow-tab ${arrowsOn ? '' : 'lg:pointer-events-none lg:opacity-0'}`
 
   return (
-    <section id="new-collection" aria-label="New collection" className={`${dark ? 'hero-dark' : 'hero-light'} hero-frame hero-join-top`}>
+    <section id="new-collection" aria-label="New collection" className={`${dark ? 'hero-dark' : 'hero-light'} hero-frame hero-join-top hero-join-bottom`}>
  
 
       {/* arrows live on the wide side panels */}
@@ -103,7 +103,7 @@ export default function NewCollection({ onAddToCart, dark, arrowsOn }) {
       </button>
 
       {/* light / dark panel */}
-      <div className="frame-clip-bottom panel-bg relative min-h-[calc(100svh-7rem)] overflow-hidden rounded-b-[22px] pb-16 pt-14 max-md:flex max-md:flex-col lg:h-full lg:min-h-0 lg:pb-0 lg:pt-0">
+      <div className="frame-clip-bottom panel-bg relative min-h-[calc(100svh-7rem)] overflow-hidden pb-16 pt-14 max-md:flex max-md:flex-col lg:h-full lg:min-h-0 lg:pb-0 lg:pt-0">
  
 
         {/* ghost wordmark + shoe */}

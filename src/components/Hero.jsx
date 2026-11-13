@@ -133,23 +133,23 @@ export default function Hero({ dark }) {
 
         {/* copy + button + perks */}
         <div className="relative z-20 mx-5 mt-4 flex flex-col gap-8 max-md:contents lg:absolute lg:bottom-[11%] lg:left-[8%] lg:top-[14%] lg:mx-0 lg:mt-0 lg:justify-between lg:gap-0">
-          <div className="count-in max-md:relative max-md:z-20 max-md:order-1 max-md:mx-5 max-md:mt-4">
-            <span className="inline-block -skew-x-12 bg-accent px-3 py-1 text-[11px] font-black uppercase tracking-[0.18em] text-white">
+          <div className="count-in max-md:contents">
+            <span className="inline-block -skew-x-12 bg-accent px-3 py-1 text-[11px] font-black uppercase tracking-[0.18em] text-white max-md:order-1 max-md:mx-5 max-md:mt-4 max-md:self-start">
               New arrival
             </span>
-            <h1 className="mt-3 text-5xl font-black uppercase italic leading-[0.88] tracking-tighter lg:text-[5vw]">
+            <h1 className="mt-3 max-md:order-1 max-md:mx-5 text-5xl font-black uppercase italic leading-[0.88] tracking-tighter lg:text-[5vw]">
               Step
               <br />
               Into
               <br />
               <span className="outline-text">Motion</span>
             </h1>
-            <p className="mt-4 max-w-[260px] text-[12px] font-bold uppercase tracking-[0.16em] opacity-70">
+            <p className="mt-4 max-w-[260px] text-[12px] font-bold uppercase tracking-[0.16em] opacity-70 max-md:order-3 max-md:mx-5">
               Engineered for comfort. Designed for speed.
             </p>
 
             {/* the classic button: black block (white in dark mode), orange sweeps in on hover */}
-            <a href="#new-collection" className="btn-classic group mt-7 inline-flex">
+            <a href="#new-collection" className="btn-classic group mt-7 inline-flex max-md:order-3 max-md:mx-5 max-md:self-start">
               <span>
                 Shop now
                 <ArrowRight
@@ -161,7 +161,7 @@ export default function Hero({ dark }) {
             </a>
           </div>
 
-          <ul className="flex divide-x divide-[var(--line)] max-md:relative max-md:z-20 max-md:order-3 max-md:mx-5 max-md:mt-6">
+          <ul className="flex divide-x divide-[var(--line)] max-md:relative max-md:z-20 max-md:order-4 max-md:mx-5 max-md:mt-8">
             {perks.map(({ icon: Icon, label }) => (
               <li key={label} className="flex max-w-[110px] flex-col gap-2 px-3 first:pl-0 lg:px-5">
                 <Icon size={20} strokeWidth={1.6} />
