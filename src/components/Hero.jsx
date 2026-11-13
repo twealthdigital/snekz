@@ -1,7 +1,11 @@
+import { useEffect, useRef, useState } from 'react'
 import { ArrowRight, Feather, Layers, Zap } from 'lucide-react'
 import ImageSlot from './ImageSlot'
  
 import { products } from '../data/products'
+
+const UNITS = 1248 // placeholder number, put the real one here
+const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 const perks = [
   { icon: Feather, label: 'Ultra lightweight' },
@@ -11,6 +15,49 @@ const perks = [
 
 export default function Hero({ dark }) {
   const { price } = products[0]
+  const stage = useRef(null)
+
+  // units counter: counts up once when the hero loads
+  const [units, setUnits] = useState(() => (reduced() ? UNITS : 0))
+  useEffect(() => {
+    if (reduced()) return
+    let raf = 0
+    const start = performance.now()
+    const step = (now) => {
+      const t = Math.min(1, (now - start) / 1800)
+      setUnits(Math.round(UNITS * (1 - Math.pow(1 - t, 3))))
+      if (t < 1) raf = requestAnimationFrame(step)
+    }
+    raf = requestAnimationFrame(step)
+    return () => cancelAnimationFrame(raf)
+  }, [])
+
+  // scroll bend: scrolling pushes the shoe, then it springs back to rest
+  useEffect(() => {
+    const el = stage.current
+    if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    let last = window.scrollY
+    let v = 0
+    let raf = 0
+    const tick = () => {
+      const y = window.scrollY
+      const target = Math.max(-1, Math.min(1, (y - last) / 40))
+      last = y
+      v += (target - v) * 0.1
+      if (target === 0 && Math.abs(v) < 0.002) v = 0
+      el.style.setProperty('--bend', v.toFixed(3))
+      el.style.setProperty('--speed', Math.abs(v).toFixed(3))
+      raf = v === 0 ? 0 : requestAnimationFrame(tick)
+    }
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(tick)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(raf)
+    }
+  }, [])
 
   return (
     <section id="home" aria-label="Velocity" className={`${dark ? 'hero-dark' : 'hero-light'} hero-frame hero-join-bottom`}>
@@ -20,7 +67,7 @@ export default function Hero({ dark }) {
  
 
         {/* stage: ghost word, slash, speed lines, shoe */}
-        <div className="relative mx-auto mt-1 aspect-[4/3] w-full max-w-[520px] lg:pointer-events-none lg:absolute lg:inset-0 lg:mt-0 lg:aspect-auto lg:max-w-none">
+        <div ref={stage} className="relative mx-auto mt-1 aspect-[4/3] w-full max-w-[520px] lg:pointer-events-none lg:absolute lg:inset-0 lg:mt-0 lg:aspect-auto lg:max-w-none">
           <span
             aria-hidden
             className="pointer-events-none absolute left-1/2 top-[44%] -translate-x-1/2 -translate-y-1/2 select-none whitespace-nowrap text-[24vw] font-black uppercase italic leading-none tracking-tighter text-[var(--ghost)] lg:top-[48%] lg:text-[17vw]"
@@ -48,8 +95,18 @@ export default function Hero({ dark }) {
             />
           ))}
 
+          {/* units counter */}
+          <div className="count-in absolute right-[9%] top-[13%] hidden text-right lg:block">
+            <span className="block text-[5.5vw] font-black italic leading-[0.85] tracking-tighter tabular-nums text-accent">
+              {units.toLocaleString()}
+            </span>
+            <span className="-mr-[0.35em] mt-2 block text-sm font-black uppercase italic tracking-[0.35em] text-[var(--fg)]">
+              Units
+            </span>
+          </div>
+
           {/* price badge, same round style as the 360 button below */}
-          <div className="absolute right-3 top-3 z-10 grid h-20 w-20 -rotate-6 place-items-center rounded-full border-2 border-[var(--fg)] text-center lg:right-auto lg:left-[38%] lg:top-[12%] lg:h-28 lg:w-28">
+          <div className="hero-bend-badge absolute right-3 top-3 z-10 grid h-20 w-20 -rotate-6 place-items-center rounded-full border-2 border-[var(--fg)] text-center lg:right-auto lg:left-[38%] lg:top-[12%] lg:h-28 lg:w-28">
             <div className="leading-none">
               <span className="block text-[9px] font-black uppercase tracking-[0.2em] opacity-70">From</span>
               <span className="block text-2xl font-black italic tracking-tighter lg:text-3xl">{price}</span>
@@ -57,7 +114,7 @@ export default function Hero({ dark }) {
           </div>
 
           {/* shoe: floats a little, shadow breathes under it */}
-          <div className="absolute inset-0 lg:left-[38%] lg:top-[16%] lg:h-[62%] lg:w-[58%] lg:inset-auto">
+          <div className="hero-bend absolute inset-0 lg:left-[38%] lg:top-[16%] lg:h-[62%] lg:w-[58%] lg:inset-auto">
             <div className="shoe-in h-full w-full">
               <span
                 aria-hidden

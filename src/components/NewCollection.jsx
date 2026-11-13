@@ -74,7 +74,7 @@ export default function NewCollection({ onAddToCart, dark, setDark, arrowsOn }) 
 
   const handleAdd = () => {
  
-    onAddToCart()
+    onAddToCart({ id: product.id, color: imgIndex })
     setAdded(true)
     setTimeout(() => setAdded(false), 1800)
   }
@@ -105,15 +105,21 @@ export default function NewCollection({ onAddToCart, dark, setDark, arrowsOn }) 
       {/* ADD TO CART sits in the bottom notch */}
       <button
         onClick={handleAdd}
-        className="notch-btn flex w-[40%] items-center justify-center gap-2 text-xs font-extrabold uppercase tracking-[0.2em] text-[var(--frame-fg)] transition hover:text-accent lg:w-[30%] lg:text-sm"
+        className="notch-btn group relative flex w-[40%] items-center justify-center overflow-hidden text-xs font-extrabold uppercase tracking-[0.2em] text-[var(--frame-fg)] transition-colors duration-300 hover:text-white lg:w-[30%] lg:text-sm"
       >
-        {added ? (
-          <>
-            <Check size={16} strokeWidth={3} /> Added
-          </>
-        ) : (
-          'Add to cart'
-        )}
+        <span
+          aria-hidden
+          className="absolute inset-y-0 -inset-x-4 -translate-x-[110%] -skew-x-12 bg-accent transition-transform duration-300 ease-out group-hover:translate-x-0"
+        />
+        <span className="relative flex items-center gap-2">
+          {added ? (
+            <>
+              <Check size={16} strokeWidth={3} /> Added
+            </>
+          ) : (
+            'Add to cart'
+          )}
+        </span>
       </button>
 
       {/* light / dark panel */}
@@ -231,9 +237,13 @@ export default function NewCollection({ onAddToCart, dark, setDark, arrowsOn }) 
           <button
             onClick={rotate}
             title="Rotate view"
-            className="grid h-14 w-14 place-items-center rounded-full border-2 border-[var(--fg)] text-[13px] font-black transition hover:border-accent hover:text-accent lg:absolute lg:bottom-[9%] lg:left-1/2 lg:-translate-x-1/2"
+            className="group relative grid h-14 w-14 place-items-center overflow-hidden rounded-full border-2 border-[var(--fg)] text-[13px] font-black transition-[color,box-shadow,border-color] duration-300 hover:border-accent hover:text-white hover:shadow-[4px_4px_0_0_var(--color-accent)] active:shadow-[1px_1px_0_0_var(--color-accent)] lg:absolute lg:bottom-[9%] lg:left-1/2 lg:-translate-x-1/2"
           >
-            {(view + 1) * 90}°
+            <span
+              aria-hidden
+              className="absolute inset-0 translate-y-full bg-accent transition-transform duration-300 ease-out group-hover:translate-y-0"
+            />
+            <span className="relative">{(view + 1) * 90}°</span>
           </button>
 
           <div className="flex flex-col items-end lg:absolute lg:bottom-[7%] lg:right-[9%]">
@@ -243,11 +253,8 @@ export default function NewCollection({ onAddToCart, dark, setDark, arrowsOn }) 
             >
               {product.price}
             </span>
-            <button
-              onClick={handleAdd}
-              className="mt-3 hidden -skew-x-12 bg-accent px-6 py-3 text-xs font-black uppercase tracking-[0.2em] text-white transition hover:brightness-110 active:scale-95 lg:block"
-            >
-              <span className="block skew-x-12">{added ? 'Added' : 'Add to cart'}</span>
+            <button onClick={handleAdd} className="btn-classic mt-4 hidden lg:inline-flex">
+              <span>{added ? 'Added' : 'Add to cart'}</span>
             </button>
           </div>
 
