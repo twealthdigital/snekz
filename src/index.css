@@ -121,21 +121,46 @@ body {
   );
 }
 @media (min-width: 1024px) {
+  /* sections keep only their top / bottom notch, the side chamfers now live in .frame-sides */
   .frame-clip-top {
-    clip-path: polygon(
-      0 0, 29% 0, 34% 36px, 66% 36px, 71% 0, 100% 0,
-      100% 21%, 96% 35%, 96% 65%, 100% 79%,
-      100% 100%, 0 100%,
-      0 79%, 4% 65%, 4% 35%, 0 21%
-    );
+    clip-path: polygon(0 0, 29% 0, 34% 36px, 66% 36px, 71% 0, 100% 0, 100% 100%, 0 100%);
   }
   .frame-clip-bottom {
     clip-path: polygon(
-      0 0, 100% 0,
-      100% 21%, 96% 35%, 96% 65%, 100% 79%,
-      100% 100%, 71% 100%, 66% calc(100% - 36px), 34% calc(100% - 36px), 29% 100%, 0 100%,
-      0 79%, 4% 65%, 4% 35%, 0 21%
+      0 0, 100% 0, 100% 100%,
+      71% 100%, 66% calc(100% - 36px), 34% calc(100% - 36px), 29% 100%, 0 100%
     );
+  }
+}
+
+/* frozen side chamfers: fixed to the screen, content scrolls behind them */
+.frame-sides { display: none; }
+@media (min-width: 1024px) {
+  .frame-sides {
+    --pad: 7px;
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    pointer-events: none;
+    transition-property: --frame;
+    transition-duration: 0.7s;
+    transition-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  .frame-side {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: calc(var(--pad) + (100% - 2 * var(--pad)) * 0.04);
+    background: var(--frame);
+  }
+  .frame-side-l {
+    left: 0;
+    clip-path: polygon(0 0, var(--pad) 0, var(--pad) 21%, 100% 35%, 100% 65%, var(--pad) 79%, var(--pad) 100%, 0 100%);
+  }
+  .frame-side-r {
+    right: 0;
+    clip-path: polygon(100% 0, calc(100% - var(--pad)) 0, calc(100% - var(--pad)) 21%, 0 35%, 0 65%, calc(100% - var(--pad)) 79%, calc(100% - var(--pad)) 100%, 100% 100%);
   }
 }
 
@@ -187,8 +212,8 @@ body {
 }
 @media (min-width: 1024px) {
   .site-notch {
-    height: 43px;
-    clip-path: polygon(29% 0, 29% 7px, 34% 43px, 66% 43px, 71% 7px, 71% 0);
+    height: 54px;
+    clip-path: polygon(29% 0, 29% 7px, 34% 54px, 66% 54px, 71% 7px, 71% 0);
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -214,12 +239,31 @@ body {
   right: 0;
   height: 56px;
   background: var(--frame);
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 75% 100%, 73% 50px, 27% 50px, 25% 100%, 0 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 75% 100%, 73% 7px, 27% 7px, 25% 100%, 0 100%);
   transform: translateY(-100%);
   transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.7s;
 }
 .notch-logo {
   transition: top 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* rounded corners under the scrolled band (matches the hero's 22px curve) */
+.site-header::after {
+  content: "";
+  position: absolute;
+  top: 56px;
+  left: 0;
+  right: 0;
+  height: 22px;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 100% 100%, transparent 21px, var(--frame) 22px) left top / 29px 22px no-repeat,
+    radial-gradient(circle at 0 100%, transparent 21px, var(--frame) 22px) right top / 29px 22px no-repeat;
+  transform: translateY(calc(-100% - 56px));
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.site-header-in::after {
+  transform: translateY(0);
 }
 
 /* scrolled state */
@@ -231,23 +275,47 @@ body {
   transform: translateY(0);
 }
 .site-header-in .site-notch {
-  clip-path: polygon(20% 0, 20% 0, 27% 50px, 73% 50px, 80% 0, 80% 0);
+  height: 56px;
+  clip-path: polygon(25% 56px, 27% 7px, 27% 7px, 73% 7px, 73% 7px, 75% 56px);
+  background-color: transparent;
+  transition: left 0.5s, right 0.5s, clip-path 0.5s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.4s;
+}
+
+/* shadow layer: hidden while the header moves, eases in once it has settled */
+.site-notch::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: linear-gradient(
+    to top,
+    transparent 0%,
+    color-mix(in srgb, var(--p2) 25%, transparent) 30%,
+    color-mix(in srgb, var(--p2) 70%, transparent) 65%,
+    var(--p2) 100%
+  );
+  transition: opacity 0.25s ease;
+}
+.site-header-in .site-notch::after {
+  opacity: 1;
+  transition: opacity 0.7s ease 0.55s;
 }
 .site-header-in .notch-logo {
-  top: 6px;
+  top: 10px;
 }
+ 
 .site-header-in > div:last-child {
   margin: 0;
 }
 @media (min-width: 1024px) {
   .site-header::before {
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 65% 100%, 63% 38px, 37% 38px, 35% 100%, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 65% 100%, 63% 7px, 37% 7px, 35% 100%, 0 100%);
   }
   .site-header-in .site-notch {
-    clip-path: polygon(29% 0, 29% 0, 37% 38px, 63% 38px, 71% 0, 71% 0);
+    clip-path: polygon(35% 56px, 37% 7px, 37% 7px, 63% 7px, 63% 7px, 65% 56px);
   }
   .site-header-in .notch-logo {
-    top: 4px;
+    top: 11px;
   }
 }
 
@@ -262,10 +330,18 @@ body {
   overflow: hidden;
   z-index: 30;
 }
+/* two logos stacked, the right one fades in for whatever is behind it */
 .notch-logo img {
-  filter: var(--logo-filter);
-  transition: filter 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+  transition: opacity 0.5s ease;
 }
+.logo-dark { opacity: 1; }
+.logo-white { opacity: 0; }
+
+/* white logo on: black frame (light mode, top) and dark panel (dark mode, scrolled) */
+.hero-light:not(.site-header-in) .logo-white,
+.hero-dark.site-header-in .logo-white { opacity: 1; }
+.hero-light:not(.site-header-in) .logo-dark,
+.hero-dark.site-header-in .logo-dark { opacity: 0; }
 .notch-btn {
   position: absolute;
   left: 50%;
@@ -277,7 +353,7 @@ body {
 
 @media (min-width: 1024px) {
   .notch-logo {
-    top: calc(var(--pad) + 3px);
+    top: calc(var(--pad) + 9px);
     width: 105px;
     height: 30px;
   }
@@ -304,7 +380,7 @@ body {
     color: var(--frame);
     box-shadow: 0 6px 16px rgb(0 0 0 / 0.35), 0 1px 4px rgb(0 0 0 / 0.25);
     transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
-      box-shadow 0.25s ease;
+      box-shadow 0.25s ease, opacity 0.4s ease;
   }
   .arrow-tab:hover {
     color: var(--frame);

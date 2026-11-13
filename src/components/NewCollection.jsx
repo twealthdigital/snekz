@@ -5,7 +5,7 @@ import ShoeStage from './ShoeStage'
  
 import { products } from '../data/products'
 
-export default function NewCollection({ onAddToCart, dark, setDark }) {
+export default function NewCollection({ onAddToCart, dark, setDark, arrowsOn }) {
   const [pIndex, setPIndex] = useState(0)
   const [imgIndex, setImgIndex] = useState(0)
   const [added, setAdded] = useState(false)
@@ -80,7 +80,7 @@ export default function NewCollection({ onAddToCart, dark, setDark }) {
   }
 
   const arrowBase =
-    'absolute z-30 grid h-10 w-10 place-items-center rounded-full bg-[var(--frame)] text-[var(--frame-fg)] transition hover:text-accent top-[17%] lg:top-1/2 lg:-translate-y-1/2 arrow-tab'
+    `absolute lg:fixed z-[36] grid h-10 w-10 place-items-center rounded-full bg-[var(--frame)] text-[var(--frame-fg)] transition hover:text-accent top-[17%] lg:top-1/2 lg:-translate-y-1/2 arrow-tab ${arrowsOn ? '' : 'lg:pointer-events-none lg:opacity-0'}`
 
   return (
     <section id="new-collection" aria-label="New collection" className={`${dark ? 'hero-dark' : 'hero-light'} hero-frame hero-join-top`}>

@@ -1,5 +1,6 @@
 import { Search, ShoppingBag, User, LayoutGrid } from 'lucide-react'
-import logo from '../assets/logo.png'
+import logoDark from '../assets/logo-dark.png'
+import logoWhite from '../assets/logo-white.png'
 
 const links = [
   { label: 'Shop', href: '#shop' },
@@ -14,7 +15,8 @@ export function NotchLogo() {
   return (
     <a href="#home" aria-label="SNEKZ home" className="notch-logo">
       {/* if your logo is already cropped tight, change scale-[2.2] to scale-100 */}
-      <img src={logo} alt="SNEKZ" className="h-full w-full scale-[2.2] object-contain" />
+      <img src={logoDark} alt="SNEKZ" className="logo-dark absolute inset-0 h-full w-full scale-[2.2] object-contain" />
+      <img src={logoWhite} alt="" aria-hidden className="logo-white absolute inset-0 h-full w-full scale-[2.2] object-contain" />
     </a>
   )
 }

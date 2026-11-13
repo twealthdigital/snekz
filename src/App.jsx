@@ -14,7 +14,7 @@ export default function App() {
   useEffect(() => {
     const onScroll = () => {
       const el = document.getElementById('new-collection')
-      if (el) setOverCollection(el.getBoundingClientRect().top <= 40)
+      if (el) setOverCollection(el.getBoundingClientRect().top <= window.innerHeight * 0.55)
       setScrolled(window.scrollY > 10)
     }
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -24,12 +24,17 @@ export default function App() {
   return (
     <>
       <FixedHeader cartCount={cartCount} dark={dark} scrolled={scrolled} />
+      <div className={`frame-sides ${dark ? 'hero-dark' : 'hero-light'}`} aria-hidden>
+        <i className="frame-side frame-side-l" />
+        <i className="frame-side frame-side-r" />
+      </div>
       <main>
         <Hero dark={dark} />
         <NewCollection
           onAddToCart={() => setCartCount((c) => c + 1)}
           dark={dark}
           setDark={setDark}
+          arrowsOn={overCollection}
         />
       </main>
       <MobileNav cartCount={cartCount} />
