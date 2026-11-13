@@ -1206,3 +1206,12 @@ body {
   font-weight: 800;
 }
 .nav-link-on:hover { opacity: 1; }
+
+
+/* phones: bigger hero headline that scales with the screen. The shoe stage is pulled up by the
+   exact height the headline gains (3 lines x 0.88), so the shoe does not move down at all. */
+@media (max-width: 767.98px) {
+  #home { --hl: clamp(3.25rem, 15vw, 4.5rem); }
+  #home .hero-h1 { font-size: var(--hl); }
+  #home .hero-stage { margin-top: calc(0.5rem - 2.64 * (var(--hl) - 3rem)); }
+}

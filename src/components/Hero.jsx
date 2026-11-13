@@ -67,7 +67,7 @@ export default function Hero({ dark }) {
  
 
         {/* stage: ghost word, slash, speed lines, shoe */}
-        <div ref={stage} className="relative mx-auto mt-1 max-md:order-2 max-md:mt-2 aspect-[4/3] w-full max-w-[520px] lg:pointer-events-none lg:absolute lg:inset-0 lg:mt-0 lg:aspect-auto lg:max-w-none">
+        <div ref={stage} className="hero-stage relative mx-auto mt-1 max-md:order-2 max-md:mt-2 aspect-[4/3] w-full max-w-[520px] lg:pointer-events-none lg:absolute lg:inset-0 lg:mt-0 lg:aspect-auto lg:max-w-none">
           <span
             aria-hidden
             className="pointer-events-none absolute left-1/2 top-[44%] -translate-x-1/2 -translate-y-1/2 select-none whitespace-nowrap text-[24vw] font-black uppercase italic leading-none tracking-tighter text-[var(--ghost)] lg:top-[48%] lg:text-[17vw]"
@@ -137,7 +137,7 @@ export default function Hero({ dark }) {
             <span className="inline-block -skew-x-12 bg-accent px-3 py-1 text-[11px] font-black uppercase tracking-[0.18em] text-white max-md:order-1 max-md:mx-5 max-md:mt-4 max-md:self-start">
               New arrival
             </span>
-            <h1 className="mt-3 max-md:order-1 max-md:mx-5 text-5xl font-black uppercase italic leading-[0.88] tracking-tighter lg:text-[5vw]">
+            <h1 className="hero-h1 mt-3 max-md:order-1 max-md:mx-5 text-5xl font-black uppercase italic leading-[0.88] tracking-tighter lg:text-[5vw]">
               Step
               <br />
               Into
