@@ -1,8 +1,8 @@
-import { useState } from 'react'
 import { mobileLinks } from '../data/nav'
 
-export default function MobileNav({ dark, authOpen, onAccount }) {
-  const [active, setActive] = useState('home')
+export default function MobileNav({ section, dark, authOpen, onAccount }) {
+  // follows the section on screen: home, shop, collections, for you
+  const active = { home: 'home', shop: 'shop', 'new-collection': 'collections', 'for-you': 'for-you' }[section]
 
   return (
     <nav
@@ -25,7 +25,7 @@ export default function MobileNav({ dark, authOpen, onAccount }) {
               <Tag
                 {...(isAccount
                   ? { type: 'button', 'aria-haspopup': 'dialog', 'aria-expanded': !!authOpen, onClick: (e) => onAccount?.(e.currentTarget) }
-                  : { href, onClick: () => setActive(id) })}
+                  : { href })}
                 aria-label={label}
                 aria-current={isActive ? 'page' : undefined}
                 className={`group relative flex h-12 items-center rounded-full px-2.5 transition-all min-[400px]:px-3 duration-300 ${

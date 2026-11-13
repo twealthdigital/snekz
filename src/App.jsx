@@ -44,6 +44,7 @@ export default function App() {
   const closeAuth = () => setAuth((a) => ({ ...a, open: false }))
   const [overCollection, setOverCollection] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [section, setSection] = useState('home') // the section currently on screen
 
   // the fixed header takes the collection's light/dark look once it is scrolled over it
   useEffect(() => {
@@ -57,14 +58,29 @@ export default function App() {
       }
       // phones: the first header scrolls away on its own, the new one drops in once it has left
       setScrolled(window.scrollY > (window.innerWidth < 768 ? 64 : 10))
+
+      // active section: the last one whose top has passed 40% of the screen (last one at the page bottom)
+      const ids = ['home', 'shop', 'new-collection', 'for-you']
+      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4
+      let current = ids[0]
+      for (const id of ids) {
+        const sec = document.getElementById(id)
+        if (sec && sec.getBoundingClientRect().top <= window.innerHeight * 0.4) current = id
+      }
+      setSection(atBottom ? ids[ids.length - 1] : current)
     }
+    onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
   }, [])
 
   return (
     <>
-      <FixedHeader cartCount={cartCount} dark={dark} scrolled={scrolled} onCart={() => setCartOpen(true)} onAccount={openAuth} />
+      <FixedHeader section={section} cartCount={cartCount} dark={dark} scrolled={scrolled} onCart={() => setCartOpen(true)} onAccount={openAuth} />
       <div className={`frame-sides ${dark ? 'hero-dark' : 'hero-light'}`} aria-hidden>
         <i className="frame-side frame-side-l" />
         <i className="frame-side frame-side-r" />
@@ -80,7 +96,7 @@ export default function App() {
         />
         <ForYou dark={dark} />
       </main>
-      <MobileNav dark={dark} authOpen={auth.open} onAccount={openAuth} />
+      <MobileNav section={section} dark={dark} authOpen={auth.open} onAccount={openAuth} />
       <AuthDrop {...auth} dark={dark} onClose={closeAuth} />
       <CartPanel
         open={cartOpen}

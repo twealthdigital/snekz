@@ -1184,3 +1184,24 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .auth-box, .auth-dim, .auth-in { transition: none; }
 }
+
+
+/* desktop nav: the link of the section on screen turns orange and a touch bolder.
+   The hidden bold copy reserves the width, so nothing shifts when a link lights up. */
+.nav-link {
+  display: inline-grid;
+  transition: color 0.25s, opacity 0.25s;
+}
+.nav-link::after {
+  content: attr(data-text);
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  font-weight: 800;
+  pointer-events: none;
+}
+.nav-link-on {
+  color: var(--color-accent);
+  font-weight: 800;
+}
+.nav-link-on:hover { opacity: 1; }

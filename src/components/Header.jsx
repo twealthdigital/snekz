@@ -88,7 +88,7 @@ function SearchDrop({ open, x, y, dark, onClose }) {
 }
 
 // One header for the whole page: logo notch + nav, fixed at the top
-export function FixedHeader({ cartCount, dark, scrolled, onCart, onAccount }) {
+export function FixedHeader({ section, cartCount, dark, scrolled, onCart, onAccount }) {
   const [search, setSearch] = useState({ open: false, x: 0, y: 28 })
 
   const openSearch = (el) => {
@@ -105,7 +105,7 @@ export function FixedHeader({ cartCount, dark, scrolled, onCart, onAccount }) {
         <div className="site-notch" />
         <NotchLogo />
         <div className="relative mx-[7px] mt-[7px]">
-          <HeaderBar cartCount={cartCount} onSearch={openSearch} onCart={onCart} onAccount={onAccount} />
+          <HeaderBar section={section} cartCount={cartCount} onSearch={openSearch} onCart={onCart} onAccount={onAccount} />
         </div>
       </header>
       <SearchDrop open={search.open} x={search.x} y={search.y} dark={dark} onClose={closeSearch} />
@@ -114,7 +114,7 @@ export function FixedHeader({ cartCount, dark, scrolled, onCart, onAccount }) {
 }
 
 // Nav links left, icons right (inside the light area)
-export default function HeaderBar({ cartCount, onSearch, onCart, onAccount }) {
+export default function HeaderBar({ section, cartCount, onSearch, onCart, onAccount }) {
   return (
     <div className="relative z-20 flex h-14 items-center justify-between px-4 lg:absolute lg:inset-x-0 lg:top-0 lg:px-[3.5%]">
       <div className="flex items-center">
@@ -126,11 +126,21 @@ export default function HeaderBar({ cartCount, onSearch, onCart, onAccount }) {
           <Search size={19} />
         </button>
         <nav className="hidden items-center gap-4 text-[11px] font-medium uppercase tracking-wide lg:flex xl:gap-7 xl:text-[13px]">
-          {links.map((l) => (
-            <a key={l.label} href={l.href} className="transition hover:opacity-60">
-              {l.label}
-            </a>
-          ))}
+          {links.map((l, i) => {
+            // two links share #shop; only the first one lights up
+            const on = l.href === `#${section}` && links.findIndex((x) => x.href === l.href) === i
+            return (
+              <a
+                key={l.label}
+                href={l.href}
+                data-text={l.label}
+                aria-current={on ? 'true' : undefined}
+                className={`nav-link transition hover:opacity-60 ${on ? 'nav-link-on' : ''}`}
+              >
+                {l.label}
+              </a>
+            )
+          })}
         </nav>
       </div>
 
