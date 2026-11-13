@@ -1042,13 +1042,19 @@ body {
 .auth-scroll {
   position: absolute;
   inset: 0;
-  overflow-y: auto;
+  overflow-x: hidden;
+  overflow-y: auto; /* still scrolls on very short screens, but with no visible bar */
   overscroll-behavior: contain;
+  scrollbar-width: none;
 }
+.auth-scroll::-webkit-scrollbar { display: none; }
 .auth-inner {
   width: var(--w); /* fixed while the box widens, so the form never reflows */
-  padding: 22px 22px 24px;
+  padding: 30px 34px 34px; /* room on every side, so nothing touches the box edge */
 }
+.auth-layer[data-mode="mobile"] .auth-inner { padding: 26px 28px 30px; }
+/* the skewed button leans past its box; keep it clear of the right edge */
+.auth-box .btn-classic { margin-right: 6px; width: calc(100% - 6px); }
 
 .auth-box .outline-text { -webkit-text-stroke-color: var(--frame-fg); }
 .auth-close {

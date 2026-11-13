@@ -155,7 +155,7 @@ export default function AuthDrop({ open, x, y, ib, mode, dark, onClose }) {
                 </span>
               </label>
 
-              <button type="submit" className="btn-classic mt-2 flex w-full">
+              <button type="submit" className="btn-classic mt-3 flex">
                 <span className="w-full justify-center">
                   {signup ? 'Create account' : 'Sign in'}
                   <ArrowRight size={18} strokeWidth={2.6} />
