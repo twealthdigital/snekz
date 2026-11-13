@@ -107,7 +107,7 @@ export default function NewCollection({ onAddToCart, dark, arrowsOn }) {
  
 
         {/* ghost wordmark + shoe */}
-        <div className="relative mx-auto mt-1 aspect-[4/3] w-full max-w-[520px] lg:pointer-events-none lg:absolute lg:inset-0 lg:mt-0 lg:aspect-auto lg:max-w-none">
+        <div className="relative mx-auto mt-1 max-md:mt-6 max-md:-mb-10 aspect-[4/3] w-full max-w-[520px] lg:pointer-events-none lg:absolute lg:inset-0 lg:mt-0 lg:aspect-auto lg:max-w-none">
           <span
             aria-hidden
             className="pointer-events-none absolute left-1/2 top-[42%] -translate-x-1/2 -translate-y-1/2 select-none whitespace-nowrap text-[26vw] font-black uppercase italic leading-none tracking-tighter text-[var(--ghost)] lg:top-[35%] lg:text-[24vw]"
@@ -153,7 +153,7 @@ export default function NewCollection({ onAddToCart, dark, arrowsOn }) {
         {/* headline */}
         <div
           key={product.id}
-          className="count-in pointer-events-none relative z-20 mx-5 mt-5 lg:absolute lg:left-[8%] lg:top-[13%] lg:mx-0 lg:mt-0"
+          className="count-in pointer-events-none relative z-20 mx-5 mt-5 max-md:mt-2 lg:absolute lg:left-[8%] lg:top-[13%] lg:mx-0 lg:mt-0"
         >
           <span className="inline-block -skew-x-12 bg-accent px-3 py-1 text-[11px] font-black uppercase tracking-[0.18em] text-white">
             {product.tag}

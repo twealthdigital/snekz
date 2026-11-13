@@ -67,7 +67,7 @@ export default function Hero({ dark }) {
  
 
         {/* stage: ghost word, slash, speed lines, shoe */}
-        <div ref={stage} className="relative mx-auto mt-1 aspect-[4/3] w-full max-w-[520px] lg:pointer-events-none lg:absolute lg:inset-0 lg:mt-0 lg:aspect-auto lg:max-w-none">
+        <div ref={stage} className="relative mx-auto mt-1 max-md:mt-6 aspect-[4/3] w-full max-w-[520px] lg:pointer-events-none lg:absolute lg:inset-0 lg:mt-0 lg:aspect-auto lg:max-w-none">
           <span
             aria-hidden
             className="pointer-events-none absolute left-1/2 top-[44%] -translate-x-1/2 -translate-y-1/2 select-none whitespace-nowrap text-[24vw] font-black uppercase italic leading-none tracking-tighter text-[var(--ghost)] lg:top-[48%] lg:text-[17vw]"
@@ -132,7 +132,7 @@ export default function Hero({ dark }) {
         </div>
 
         {/* copy + button + perks */}
-        <div className="relative z-20 mx-5 mt-4 flex flex-col gap-8 lg:absolute lg:bottom-[11%] lg:left-[8%] lg:top-[14%] lg:mx-0 lg:mt-0 lg:justify-between lg:gap-0">
+        <div className="relative z-20 mx-5 mt-4 max-md:-mt-12 flex flex-col gap-8 lg:absolute lg:bottom-[11%] lg:left-[8%] lg:top-[14%] lg:mx-0 lg:mt-0 lg:justify-between lg:gap-0">
           <div className="count-in">
             <span className="inline-block -skew-x-12 bg-accent px-3 py-1 text-[11px] font-black uppercase tracking-[0.18em] text-white">
               New arrival
